@@ -6,15 +6,29 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>Archives | Hexo</title>
+  <title>SQL(一)查询语句（一）基本查询 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://example.com/archives/index.html">
+  <meta name="description" content="来源：https:&#x2F;&#x2F;ci.apache.org&#x2F;projects&#x2F;flink&#x2F;flink-docs-release-1.11&#x2F;zh&#x2F;dev&#x2F;table&#x2F;sql&#x2F;queries.html 0 简介SELECT 语句和 VALUES 语句需要使用 TableEnvironment 的 sqlQuery() 方法加以指定。这个方法会以 Table 的形式返回 SELECT （或 VALUE）的查询结果">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SQL(一)查询语句（一）基本查询">
+<meta property="og:url" content="http://example.com/2021/09/12/SQL-%E4%B8%80-%E6%9F%A5%E8%AF%A2%E8%AF%AD%E5%8F%A5%EF%BC%88%E4%B8%80%EF%BC%89%E5%9F%BA%E6%9C%AC%E6%9F%A5%E8%AF%A2/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="来源：https:&#x2F;&#x2F;ci.apache.org&#x2F;projects&#x2F;flink&#x2F;flink-docs-release-1.11&#x2F;zh&#x2F;dev&#x2F;table&#x2F;sql&#x2F;queries.html 0 简介SELECT 语句和 VALUES 语句需要使用 TableEnvironment 的 sqlQuery() 方法加以指定。这个方法会以 Table 的形式返回 SELECT （或 VALUE）的查询结果">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://common.cnblogs.com/images/copycode.gif">
+<meta property="og:image" content="https://common.cnblogs.com/images/copycode.gif">
+<meta property="og:image" content="https://common.cnblogs.com/images/copycode.gif">
+<meta property="og:image" content="https://common.cnblogs.com/images/copycode.gif">
+<meta property="og:image" content="https://common.cnblogs.com/images/copycode.gif">
+<meta property="og:image" content="https://common.cnblogs.com/images/copycode.gif">
+<meta property="article:published_time" content="2021-09-12T08:30:50.000Z">
+<meta property="article:modified_time" content="2021-09-12T08:48:30.471Z">
 <meta property="article:author" content="John Doe">
+<meta property="article:tag" content="flink">
+<meta property="article:tag" content="sql">
+<meta property="article:tag" content="大数据">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://common.cnblogs.com/images/copycode.gif">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -155,128 +169,135 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="flink基础（二十五）：flink-SQL-一-查询语句（一）基本查询" class="article article-type-flink基础（二十五）：flink " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2021" class="archive-year">2021</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2021/09/12/hive%E5%AE%89%E8%A3%85/" class="archive-article-date">
-  	<time datetime="2021-09-12T08:34:40.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-09-12</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2021/09/12/hive%E5%AE%89%E8%A3%85/">hive安装</a>
+    <h1 class="article-title" itemprop="name">
+      SQL(一)查询语句（一）基本查询
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">sql</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">大数据</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">hive</a>
-        		</li>
-      		
-		</ul>
-	</div>
 
-          
+        <!-- 单篇文章点击量 -->
+        <!--显示阅读次数-->
+        
+          <br/>
+          <a class="cloud-tie-join-count" href="javascript:void(0);" style="color:gray;font-size:14px;">
+          <span class="icon-sort"></span>
+          <span id="busuanzi_container_page_pv" style="color:#ef7522;font-size:14px;">
+            👁 <span id="busuanzi_value_page_pv"></span> &nbsp;&nbsp;
+          </span>
+          </a>
+        
+        <!--显示阅读次数完毕-->
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2021/09/12/Spring-IOC-%E5%AE%B9%E5%99%A8%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/" class="archive-article-date">
-  	<time datetime="2021-09-12T08:33:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-09-12</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2021/09/12/Spring-IOC-%E5%AE%B9%E5%99%A8%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/">Spring+IOC+容器源码分析</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">spring</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">ioc</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">后端</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-flink基础（二十五）：flink">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2021/09/12/SQL-%E4%B8%80-%E6%9F%A5%E8%AF%A2%E8%AF%AD%E5%8F%A5%EF%BC%88%E4%B8%80%EF%BC%89%E5%9F%BA%E6%9C%AC%E6%9F%A5%E8%AF%A2/" class="archive-article-date">
+        
+        <a href="/2021/09/12/SQL-%E4%B8%80-%E6%9F%A5%E8%AF%A2%E8%AF%AD%E5%8F%A5%EF%BC%88%E4%B8%80%EF%BC%89%E5%9F%BA%E6%9C%AC%E6%9F%A5%E8%AF%A2/" class="archive-article-date">
   	<time datetime="2021-09-12T08:30:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-09-12</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2021/09/12/SQL-%E4%B8%80-%E6%9F%A5%E8%AF%A2%E8%AF%AD%E5%8F%A5%EF%BC%88%E4%B8%80%EF%BC%89%E5%9F%BA%E6%9C%AC%E6%9F%A5%E8%AF%A2/">SQL(一)查询语句（一）基本查询</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>来源：<a target="_blank" rel="noopener" href="https://ci.apache.org/projects/flink/flink-docs-release-1.11/zh/dev/table/sql/queries.html">https://ci.apache.org/projects/flink/flink-docs-release-1.11/zh/dev/table/sql/queries.html</a></p>
+<h3 id="0-简介"><a href="#0-简介" class="headerlink" title="0 简介"></a>0 简介</h3><p>SELECT 语句和 VALUES 语句需要使用 <code>TableEnvironment</code> 的 <code>sqlQuery()</code> 方法加以指定。这个方法会以 <code>Table</code> 的形式返回 SELECT （或 VALUE）的查询结果。<code>Table</code> 可以被用于 <a target="_blank" rel="noopener" href="https://ci.apache.org/projects/flink/flink-docs-release-1.11/zh/dev/table/common.html#mixing-table-api-and-sql">随后的SQL 与 Table API 查询</a> 、 <a target="_blank" rel="noopener" href="https://ci.apache.org/projects/flink/flink-docs-release-1.11/zh/dev/table/common.html#integration-with-datastream-and-dataset-api">转换为 DataSet 或 DataStream </a>或 <a target="_blank" rel="noopener" href="https://ci.apache.org/projects/flink/flink-docs-release-1.11/zh/dev/table/common.html#emit-a-table">输出到 TableSink </a>。SQL 与 Table API 的查询可以进行无缝融合、整体优化并翻译为单一的程序。</p>
+<p>为了可以在 SQL 查询中访问到表，你需要先 <a target="_blank" rel="noopener" href="https://ci.apache.org/projects/flink/flink-docs-release-1.11/zh/dev/table/common.html#register-tables-in-the-catalog">在 TableEnvironment 中注册表 </a>。表可以通过 <a target="_blank" rel="noopener" href="https://ci.apache.org/projects/flink/flink-docs-release-1.11/zh/dev/table/common.html#register-a-tablesource">TableSource</a>、 <a target="_blank" rel="noopener" href="https://ci.apache.org/projects/flink/flink-docs-release-1.11/zh/dev/table/common.html#register-a-table">Table</a>、<a target="_blank" rel="noopener" href="https://ci.apache.org/projects/flink/flink-docs-release-1.11/zh/dev/table/sql/create.html">CREATE TABLE 语句</a>、 <a target="_blank" rel="noopener" href="https://ci.apache.org/projects/flink/flink-docs-release-1.11/zh/dev/table/common.html#register-a-datastream-or-dataset-as-table">DataStream 或 DataSet</a> 注册。 用户也可以通过 <a target="_blank" rel="noopener" href="https://ci.apache.org/projects/flink/flink-docs-release-1.11/zh/dev/table/catalogs.html">向 TableEnvironment 中注册 catalog </a>的方式指定数据源的位置。</p>
+<p>为方便起见 <code>Table.toString()</code> 将会在其 <code>TableEnvironment</code> 中自动使用一个唯一的名字注册表并返回表名。 因此， <code>Table</code> 对象可以如下文所示样例，直接内联到 SQL 语句中。</p>
+<p>注意： 查询若包括了不支持的 SQL 特性，将会抛出 <code>TableException</code>。批处理和流处理所支持的 SQL 特性将会在下述章节中列出。</p>
+<h3 id="1-指定查询"><a href="#1-指定查询" class="headerlink" title="1 指定查询"></a>1 指定查询</h3><p>以下示例显示如何在已注册和内联表上指定 SQL 查询。</p>
+<p><a href="javascript:void(0);"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">val env = StreamExecutionEnvironment.getExecutionEnvironment</span><br><span class="line">val tableEnv = StreamTableEnvironment.create(env)</span><br><span class="line"></span><br><span class="line">//  从外部数据源读取 DataStream </span><br><span class="line">val ds: DataStream[(Long, String, Integer)] = env.addSource(...)</span><br><span class="line"></span><br><span class="line">// 使用 SQL 查询内联的（未注册的）表</span><br><span class="line">val table = ds.toTable(tableEnv, $&quot;user&quot;, $&quot;product&quot;, $&quot;amount&quot;)</span><br><span class="line">val result = tableEnv.sqlQuery(</span><br><span class="line">  s&quot;SELECT SUM(amount) FROM $table WHERE product LIKE &#x27;%Rubber%&#x27;&quot;)</span><br><span class="line"></span><br><span class="line">// 使用名称 &quot;Orders&quot; 注册一个 DataStream </span><br><span class="line">tableEnv.createTemporaryView(&quot;Orders&quot;, ds, $&quot;user&quot;, $&quot;product&quot;, $&quot;amount&quot;)</span><br><span class="line">// 在表上执行 SQL 查询并得到以新表返回的结果</span><br><span class="line">val result2 = tableEnv.sqlQuery(</span><br><span class="line">  &quot;SELECT product, amount FROM Orders WHERE product LIKE &#x27;%Rubber%&#x27;&quot;)</span><br><span class="line"></span><br><span class="line">// 创建并注册一个 TableSink</span><br><span class="line">val schema = new Schema()</span><br><span class="line">    .field(&quot;product&quot;, DataTypes.STRING())</span><br><span class="line">    .field(&quot;amount&quot;, DataTypes.INT())</span><br><span class="line"></span><br><span class="line">tableEnv.connect(new FileSystem().path(&quot;/path/to/file&quot;))</span><br><span class="line">    .withFormat(...)</span><br><span class="line">    .withSchema(schema)</span><br><span class="line">    .createTemporaryTable(&quot;RubberOrders&quot;)</span><br><span class="line"></span><br><span class="line">// 在表上执行插入操作，并把结果发出到 TableSink</span><br><span class="line">tableEnv.executeSql(</span><br><span class="line">  &quot;INSERT INTO RubberOrders SELECT product, amount FROM Orders WHERE product LIKE &#x27;%Rubber%&#x27;&quot;)</span><br></pre></td></tr></table></figure>
 
-        <div class="article-info info-on-right">
-          
+<p><a href="javascript:void(0);"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></p>
+<p>2 执行查询</p>
+<p>SELECT 语句或者 VALUES 语句可以通过 <code>TableEnvironment.executeSql()</code> 方法来执行，将选择的结果收集到本地。该方法返回 <code>TableResult</code> 对象用于包装查询的结果。和 SELECT 语句很像，一个 <code>Table</code> 对象可以通过 <code>Table.execute()</code> 方法执行从而将 <code>Table</code> 的内容收集到本地客户端。 <code>TableResult.collect()</code> 方法返回一个可以关闭的行迭代器。除非所有的数据都被收集到本地，否则一个查询作业永远不会结束。所以我们应该通过 <code>CloseableIterator#close()</code> 方法主动地关闭作业以防止资源泄露。 我们还可以通过 <code>TableResult.print()</code> 方法将查询结果打印到本地控制台。<code>TableResult</code> 中的结果数据只能被访问一次，因此一个 <code>TableResult</code> 实例中，<code>collect()</code> 方法和 <code>print()</code> 方法不能被同时使用。</p>
+<p>对于流模式，<code>TableResult.collect()</code> 方法或者 <code>TableResult.print</code> 方法保证端到端精确一次的数据交付。这就要求开启 checkpointing。默认情况下 checkpointing 是禁止的，我们可以通过 <code>TableConfig</code> 设置 checkpointing 相关属性（请参考 <a target="_blank" rel="noopener" href="https://ci.apache.org/projects/flink/flink-docs-release-1.11/zh/ops/config.html#checkpointing">checkpointing 配置</a>）来开启 checkpointing。 因此一条结果数据只有在其对应的 checkpointing 完成后才能在客户端被访问。</p>
+<p>注意： 对于流模式，当前仅支持追加模式的查询语句，并且应该开启 checkpoint。因为一条结果只有在其对应的 checkpoint 完成之后才能被客户端访问到。</p>
+<p><a href="javascript:void(0);"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">val env = StreamExecutionEnvironment.getExecutionEnvironment()</span><br><span class="line">val tableEnv = StreamTableEnvironment.create(env, settings)</span><br><span class="line">// enable checkpointing</span><br><span class="line">tableEnv.getConfig.getConfiguration.set(</span><br><span class="line">  ExecutionCheckpointingOptions.CHECKPOINTING_MODE, CheckpointingMode.EXACTLY_ONCE)</span><br><span class="line">tableEnv.getConfig.getConfiguration.set(</span><br><span class="line">  ExecutionCheckpointingOptions.CHECKPOINTING_INTERVAL, Duration.ofSeconds(10))</span><br><span class="line"></span><br><span class="line">tableEnv.executeSql(&quot;CREATE TABLE Orders (`user` BIGINT, product STRING, amount INT) WITH (...)&quot;)</span><br><span class="line"></span><br><span class="line">// execute SELECT statement</span><br><span class="line">val tableResult1 = tableEnv.executeSql(&quot;SELECT * FROM Orders&quot;)</span><br><span class="line">val it = tableResult1.collect()</span><br><span class="line">try while (it.hasNext) &#123;</span><br><span class="line">  val row = it.next</span><br><span class="line">  // handle row</span><br><span class="line">&#125;</span><br><span class="line">finally it.close() // close the iterator to avoid resource leak</span><br><span class="line"></span><br><span class="line">// execute Table</span><br><span class="line">val tableResult2 = tableEnv.sqlQuery(&quot;SELECT * FROM Orders&quot;).execute()</span><br><span class="line">tableResult2.print()</span><br></pre></td></tr></table></figure>
+
+<p><a href="javascript:void(0);"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></p>
+<h3 id="3-语法"><a href="#3-语法" class="headerlink" title="3 语法"></a>3 语法</h3><p>Flink 通过支持标准 ANSI SQL的 <a target="_blank" rel="noopener" href="https://calcite.apache.org/docs/reference.html">Apache Calcite</a> 解析 SQL。</p>
+<p>以下 BNF-语法 描述了批处理和流处理查询中所支持的 SQL 特性的超集。其中 <a target="_blank" rel="noopener" href="https://ci.apache.org/projects/flink/flink-docs-release-1.11/zh/dev/table/sql/queries.html#%E6%93%8D%E4%BD%9C%E7%AC%A6">操作符</a> 章节展示了所支持的特性的样例，并指明了哪些特性仅适用于批处理或流处理。</p>
+<p><a href="javascript:void(0);"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br></pre></td><td class="code"><pre><span class="line">query:</span><br><span class="line">  values</span><br><span class="line">  | &#123;</span><br><span class="line">      select</span><br><span class="line">      | selectWithoutFrom</span><br><span class="line">      | query UNION [ ALL ] query</span><br><span class="line">      | query EXCEPT query</span><br><span class="line">      | query INTERSECT query</span><br><span class="line">    &#125;</span><br><span class="line">    [ ORDER BY orderItem [, orderItem ]* ]</span><br><span class="line">    [ LIMIT &#123; count | ALL &#125; ]</span><br><span class="line">    [ OFFSET start &#123; ROW | ROWS &#125; ]</span><br><span class="line">    [ FETCH &#123; FIRST | NEXT &#125; [ count ] &#123; ROW | ROWS &#125; ONLY]</span><br><span class="line"></span><br><span class="line">orderItem:</span><br><span class="line">  expression [ ASC | DESC ]</span><br><span class="line"></span><br><span class="line">select:</span><br><span class="line">  SELECT [ ALL | DISTINCT ]</span><br><span class="line">  &#123; * | projectItem [, projectItem ]* &#125;</span><br><span class="line">  FROM tableExpression</span><br><span class="line">  [ WHERE booleanExpression ]</span><br><span class="line">  [ GROUP BY &#123; groupItem [, groupItem ]* &#125; ]</span><br><span class="line">  [ HAVING booleanExpression ]</span><br><span class="line">  [ WINDOW windowName AS windowSpec [, windowName AS windowSpec ]* ]</span><br><span class="line"></span><br><span class="line">selectWithoutFrom:</span><br><span class="line">  SELECT [ ALL | DISTINCT ]</span><br><span class="line">  &#123; * | projectItem [, projectItem ]* &#125;</span><br><span class="line"></span><br><span class="line">projectItem:</span><br><span class="line">  expression [ [ AS ] columnAlias ]</span><br><span class="line">  | tableAlias . *</span><br><span class="line"></span><br><span class="line">tableExpression:</span><br><span class="line">  tableReference [, tableReference ]*</span><br><span class="line">  | tableExpression [ NATURAL ] [ LEFT | RIGHT | FULL ] JOIN tableExpression [ joinCondition ]</span><br><span class="line"></span><br><span class="line">joinCondition:</span><br><span class="line">  ON booleanExpression</span><br><span class="line">  | USING &#x27;(&#x27; column [, column ]* &#x27;)&#x27;</span><br><span class="line"></span><br><span class="line">tableReference:</span><br><span class="line">  tablePrimary</span><br><span class="line">  [ matchRecognize ]</span><br><span class="line">  [ [ AS ] alias [ &#x27;(&#x27; columnAlias [, columnAlias ]* &#x27;)&#x27; ] ]</span><br><span class="line"></span><br><span class="line">tablePrimary:</span><br><span class="line">  [ TABLE ] [ [ catalogName . ] schemaName . ] tableName [ dynamicTableOptions ]</span><br><span class="line">  | LATERAL TABLE &#x27;(&#x27; functionName &#x27;(&#x27; expression [, expression ]* &#x27;)&#x27; &#x27;)&#x27;</span><br><span class="line">  | UNNEST &#x27;(&#x27; expression &#x27;)&#x27;</span><br><span class="line"></span><br><span class="line">dynamicTableOptions:</span><br><span class="line">  /*+ OPTIONS(key=val [, key=val]*) */</span><br><span class="line"></span><br><span class="line">key:</span><br><span class="line">  stringLiteral</span><br><span class="line"></span><br><span class="line">val:</span><br><span class="line">  stringLiteral</span><br><span class="line"></span><br><span class="line">values:</span><br><span class="line">  VALUES expression [, expression ]*</span><br><span class="line"></span><br><span class="line">groupItem:</span><br><span class="line">  expression</span><br><span class="line">  | &#x27;(&#x27; &#x27;)&#x27;</span><br><span class="line">  | &#x27;(&#x27; expression [, expression ]* &#x27;)&#x27;</span><br><span class="line">  | CUBE &#x27;(&#x27; expression [, expression ]* &#x27;)&#x27;</span><br><span class="line">  | ROLLUP &#x27;(&#x27; expression [, expression ]* &#x27;)&#x27;</span><br><span class="line">  | GROUPING SETS &#x27;(&#x27; groupItem [, groupItem ]* &#x27;)&#x27;</span><br><span class="line"></span><br><span class="line">windowRef:</span><br><span class="line">    windowName</span><br><span class="line">  | windowSpec</span><br><span class="line"></span><br><span class="line">windowSpec:</span><br><span class="line">    [ windowName ]</span><br><span class="line">    &#x27;(&#x27;</span><br><span class="line">    [ ORDER BY orderItem [, orderItem ]* ]</span><br><span class="line">    [ PARTITION BY expression [, expression ]* ]</span><br><span class="line">    [</span><br><span class="line">        RANGE numericOrIntervalExpression &#123;PRECEDING&#125;</span><br><span class="line">      | ROWS numericExpression &#123;PRECEDING&#125;</span><br><span class="line">    ]</span><br><span class="line">    &#x27;)&#x27;</span><br><span class="line"></span><br><span class="line">matchRecognize:</span><br><span class="line">      MATCH_RECOGNIZE &#x27;(&#x27;</span><br><span class="line">      [ PARTITION BY expression [, expression ]* ]</span><br><span class="line">      [ ORDER BY orderItem [, orderItem ]* ]</span><br><span class="line">      [ MEASURES measureColumn [, measureColumn ]* ]</span><br><span class="line">      [ ONE ROW PER MATCH ]</span><br><span class="line">      [ AFTER MATCH</span><br><span class="line">            ( SKIP TO NEXT ROW</span><br><span class="line">            | SKIP PAST LAST ROW</span><br><span class="line">            | SKIP TO FIRST variable</span><br><span class="line">            | SKIP TO LAST variable</span><br><span class="line">            | SKIP TO variable )</span><br><span class="line">      ]</span><br><span class="line">      PATTERN &#x27;(&#x27; pattern &#x27;)&#x27;</span><br><span class="line">      [ WITHIN intervalLiteral ]</span><br><span class="line">      DEFINE variable AS condition [, variable AS condition ]*</span><br><span class="line">      &#x27;)&#x27;</span><br><span class="line"></span><br><span class="line">measureColumn:</span><br><span class="line">      expression AS alias</span><br><span class="line"></span><br><span class="line">pattern:</span><br><span class="line">      patternTerm [ &#x27;|&#x27; patternTerm ]*</span><br><span class="line"></span><br><span class="line">patternTerm:</span><br><span class="line">      patternFactor [ patternFactor ]*</span><br><span class="line"></span><br><span class="line">patternFactor:</span><br><span class="line">      variable [ patternQuantifier ]</span><br><span class="line"></span><br><span class="line">patternQuantifier:</span><br><span class="line">      &#x27;*&#x27;</span><br><span class="line">  |   &#x27;*?&#x27;</span><br><span class="line">  |   &#x27;+&#x27;</span><br><span class="line">  |   &#x27;+?&#x27;</span><br><span class="line">  |   &#x27;?&#x27;</span><br><span class="line">  |   &#x27;??&#x27;</span><br><span class="line">  |   &#x27;&#123;&#x27; &#123; [ minRepeat ], [ maxRepeat ] &#125; &#x27;&#125;&#x27; [&#x27;?&#x27;]</span><br><span class="line">  |   &#x27;&#123;&#x27; repeat &#x27;&#125;&#x27;</span><br></pre></td></tr></table></figure>
+
+<p><a href="javascript:void(0);"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></p>
+<p>Flink SQL 对于标识符（表、属性、函数名）有类似于 Java 的词法约定:</p>
+<ul>
+<li>不管是否引用标识符，都保留标识符的大小写。</li>
+<li>且标识符需区分大小写。</li>
+<li>与 Java 不一样的地方在于，通过反引号，可以允许标识符带有非字母的字符（如：<code>&quot;SELECT a AS </code>my field<code> FROM t&quot;</code>）。</li>
+</ul>
+<p>字符串文本常量需要被单引号包起来（如 <code>SELECT &#39;Hello World&#39;</code> ）。两个单引号表示转移（如 <code>SELECT &#39;It&#39;&#39;s me.&#39;</code>）。字符串文本常量支持 Unicode 字符，如需明确使用 Unicode 编码，请使用以下语法：</p>
+<ul>
+<li>使用反斜杠（<code>\</code>）作为转义字符（默认）：<code>SELECT U&amp;&#39;\263A&#39;</code></li>
+<li>使用自定义的转义字符： <code>SELECT U&amp;&#39;#263A&#39; UESCAPE &#39;#&#39;</code></li>
+</ul>
+
+      
+
+
+      
+        
+          <div class="essayending">
+            <div>
+             <div style="text-align:center;color: #ccc;font-size:22px;">
+             <br/>
+             <br/>
+             -------------<i class="fa fa-paw"></i>感谢您的阅读-------------
+             <br/>
+             <br/>
+              <br/>
+              <br/>
+             </div>
+            </div>
+          </div>
+        
+ 
+     
+
+      <!-- 增加版权声明 -->
+      <!--  
+      
+      
+        <div class="declare" hidden="hidden"></div>
+      
+-->
+      <!-- 增加版权声明结束 -->
+
+
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -296,88 +317,115 @@
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2021/09/12/SQL-%E4%B8%80-%E6%9F%A5%E8%AF%A2%E8%AF%AD%E5%8F%A5%EF%BC%88%E4%B8%80%EF%BC%89%E5%9F%BA%E6%9C%AC%E6%9F%A5%E8%AF%A2/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2021/09/12/Flink%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E6%9C%89%E7%8A%B6%E6%80%81%E7%9A%84%E6%B5%81%E5%BC%8F%E5%A4%84%E7%90%86%E7%AE%80%E4%BB%8B/" class="archive-article-date">
-  	<time datetime="2021-09-12T08:29:35.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-09-12</time>
-</a>
+<nav id="article-nav">
+  
+    <a href="/2021/09/12/Spring-IOC-%E5%AE%B9%E5%99%A8%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          Spring+IOC+容器源码分析
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2021/09/12/Flink%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E6%9C%89%E7%8A%B6%E6%80%81%E7%9A%84%E6%B5%81%E5%BC%8F%E5%A4%84%E7%90%86%E7%AE%80%E4%BB%8B/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Flink基础（一）：有状态的流式处理简介</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2021/09/12/Flink%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E6%9C%89%E7%8A%B6%E6%80%81%E7%9A%84%E6%B5%81%E5%BC%8F%E5%A4%84%E7%90%86%E7%AE%80%E4%BB%8B/">Flink基础（一）：有状态的流式处理简介</a>
-    </h1>
+  
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">flink</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">流式计算</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2021/09/12/hello-world/" class="archive-article-date">
-  	<time datetime="2021-09-12T07:57:50.594Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-09-12</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2021/09/12/hello-world/">Hello World</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
   
 
-    
+  
 
 
           </div>
@@ -400,8 +448,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

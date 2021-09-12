@@ -6,15 +6,26 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>Hexo</title>
+  <title>Spring+IOC+容器源码分析 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://example.com/index.html">
+  <meta name="description" content="Spring 最重要的概念是 IOC 和 AOP，本篇文章其实就是要带领大家来分析下 Spring 的 IOC 容器。既然大家平时都要用到 Spring，怎么可以不好好了解 Spring 呢？阅读本文并不能让你成为 Spring 专家，不过一定有助于大家理解 Spring 的很多概念，帮助大家排查应用中和 Spring 相关的一些问题。 本文采用的源码版本是 4.3.11.RELEASE，算是 5">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring+IOC+容器源码分析">
+<meta property="og:url" content="http://example.com/2021/09/12/Spring-IOC-%E5%AE%B9%E5%99%A8%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Spring 最重要的概念是 IOC 和 AOP，本篇文章其实就是要带领大家来分析下 Spring 的 IOC 容器。既然大家平时都要用到 Spring，怎么可以不好好了解 Spring 呢？阅读本文并不能让你成为 Spring 专家，不过一定有助于大家理解 Spring 的很多概念，帮助大家排查应用中和 Spring 相关的一些问题。 本文采用的源码版本是 4.3.11.RELEASE，算是 5">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://www.javadoop.com/blogimages/spring-context/1.png">
+<meta property="og:image" content="https://www.javadoop.com/blogimages/spring-context/2.png">
+<meta property="og:image" content="https://www.javadoop.com/blogimages/spring-context/3.png">
+<meta property="article:published_time" content="2021-09-12T08:33:13.000Z">
+<meta property="article:modified_time" content="2021-09-12T09:35:56.615Z">
 <meta property="article:author" content="John Doe">
+<meta property="article:tag" content="spring">
+<meta property="article:tag" content="ioc">
+<meta property="article:tag" content="后端">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.javadoop.com/blogimages/spring-context/1.png">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -155,16 +166,14 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-    <article id="post-hive安装" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+            <article id="post-Spring-IOC-容器源码分析" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/09/12/hive%E5%AE%89%E8%A3%85/">hive安装</a>
+    <h1 class="article-title" itemprop="name">
+      Spring+IOC+容器源码分析
     </h1>
   
 
@@ -172,129 +181,13 @@
         <!-- 单篇文章点击量 -->
         <!--显示阅读次数-->
         
-        <!--显示阅读次数完毕-->
-
-        
-        <a href="/2021/09/12/hive%E5%AE%89%E8%A3%85/" class="archive-article-date">
-  	<time datetime="2021-09-12T08:34:40.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-09-12</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><a target="_blank" rel="noopener" href="http://hive.apache.org/">http://hive.apache.org/</a></p>
-<p><a target="_blank" rel="noopener" href="https://cwiki.apache.org/confluence/display/HIVE">https://cwiki.apache.org/confluence/display/HIVE</a></p>
-<p><a target="_blank" rel="noopener" href="https://www.docs4dev.com/docs/zh/apache-hive/3.1.1/reference">https://www.docs4dev.com/docs/zh/apache-hive/3.1.1/reference</a></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br></pre></td><td class="code"><pre><span class="line">1.解压</span><br><span class="line">	tar -zxvf /opt/software/apache-hive-3.1.2-bin.tar.gz -C /opt/module/</span><br><span class="line">	</span><br><span class="line">2.添加环境变量 </span><br><span class="line">	sudo vim /etc/profile.d/my_env.sh</span><br><span class="line">	添加如下内容</span><br><span class="line">	#HIVE_HOME</span><br><span class="line">	export HIVE_HOME=/opt/module/apache-hive-3.1.2-bin</span><br><span class="line">	export PATH=$PATH:$HIVE_HOME/bin</span><br><span class="line">	</span><br><span class="line">3.刷新</span><br><span class="line">	source /etc/profile.d/my_env.sh</span><br><span class="line">	</span><br><span class="line">4.解决日志Jar包冲突</span><br><span class="line">	mv $HIVE_HOME/lib/log4j-slf4j-impl-2.10.0.jar $HIVE_HOME/lib/log4j-slf4j-impl-2.10.0.bak</span><br><span class="line">	</span><br><span class="line">5.将MySQL的JDBC驱动拷贝到Hive的lib目录下</span><br><span class="line">	cp /opt/software/mysql-connector-java-5.1.48.jar $HIVE_HOME/lib</span><br><span class="line"></span><br><span class="line">6.在$HIVE_HOME/conf目录下新建hive-site.xml文件</span><br><span class="line">	vim $HIVE_HOME/conf/hive-site.xml</span><br><span class="line">	添加如下内容</span><br><span class="line">    &lt;?xml version=&quot;1.0&quot;?&gt;</span><br><span class="line">    &lt;?xml-stylesheet type=&quot;text/xsl&quot; href=&quot;configuration.xsl&quot;?&gt;</span><br><span class="line">    &lt;configuration&gt;</span><br><span class="line">        &lt;!-- 配置数据库 用于存储元数据信息 --&gt;</span><br><span class="line">        &lt;property&gt;</span><br><span class="line">            &lt;name&gt;javax.jdo.option.ConnectionURL&lt;/name&gt;</span><br><span class="line">            &lt;value&gt;jdbc:mysql://hadoop102:3306/metastore?useSSL=false&lt;/value&gt;</span><br><span class="line">        &lt;/property&gt;</span><br><span class="line">        &lt;property&gt;</span><br><span class="line">            &lt;name&gt;javax.jdo.option.ConnectionDriverName&lt;/name&gt;</span><br><span class="line">            &lt;value&gt;com.mysql.jdbc.Driver&lt;/value&gt;</span><br><span class="line">        &lt;/property&gt;</span><br><span class="line">        &lt;property&gt;</span><br><span class="line">            &lt;name&gt;javax.jdo.option.ConnectionUserName&lt;/name&gt;</span><br><span class="line">            &lt;value&gt;root&lt;/value&gt;</span><br><span class="line">        &lt;/property&gt;</span><br><span class="line">        &lt;property&gt;</span><br><span class="line">            &lt;name&gt;javax.jdo.option.ConnectionPassword&lt;/name&gt;</span><br><span class="line">            &lt;value&gt;root&lt;/value&gt;</span><br><span class="line">        &lt;/property&gt;</span><br><span class="line">        &lt;!-- 原始数据在 HDFS 上的存储位置 --&gt; </span><br><span class="line">        &lt;property&gt;</span><br><span class="line">            &lt;name&gt;hive.metastore.warehouse.dir&lt;/name&gt;</span><br><span class="line">            &lt;value&gt;/user/hive/warehouse&lt;/value&gt;</span><br><span class="line">        &lt;/property&gt;</span><br><span class="line">        &lt;!-- 设为false 不做验证--&gt;</span><br><span class="line">        &lt;property&gt;</span><br><span class="line">            &lt;name&gt;hive.metastore.schema.verification&lt;/name&gt;</span><br><span class="line">            &lt;value&gt;false&lt;/value&gt;</span><br><span class="line">        &lt;/property&gt;</span><br><span class="line">        &lt;!-- 启动元数据及元数据库服务只需启动时连接 没有配置就不需要启动每次操作都会连接 --&gt;    </span><br><span class="line">        &lt;property&gt;</span><br><span class="line">            &lt;name&gt;hive.metastore.uris&lt;/name&gt;</span><br><span class="line">            &lt;value&gt;thrift://hadoop102:9083&lt;/value&gt;</span><br><span class="line">        &lt;/property&gt;</span><br><span class="line"></span><br><span class="line">        &lt;property&gt;</span><br><span class="line">            &lt;name&gt;hive.server2.thrift.port&lt;/name&gt;</span><br><span class="line">            &lt;value&gt;10000&lt;/value&gt;</span><br><span class="line">        &lt;/property&gt;</span><br><span class="line">        &lt;property&gt;</span><br><span class="line">            &lt;name&gt;hive.server2.thrift.bind.host&lt;/name&gt;</span><br><span class="line">            &lt;value&gt;hadoop102&lt;/value&gt;</span><br><span class="line">        &lt;/property&gt;</span><br><span class="line">        &lt;property&gt;</span><br><span class="line">            &lt;name&gt;hive.metastore.event.db.notification.api.auth&lt;/name&gt;</span><br><span class="line">            &lt;value&gt;false&lt;/value&gt;</span><br><span class="line">        &lt;/property&gt;</span><br><span class="line">        &lt;property&gt;</span><br><span class="line">            &lt;name&gt;hive.cli.print.header&lt;/name&gt;</span><br><span class="line">            &lt;value&gt;true&lt;/value&gt;</span><br><span class="line">        &lt;/property&gt;</span><br><span class="line">        &lt;property&gt;</span><br><span class="line">            &lt;name&gt;hive.cli.print.current.db&lt;/name&gt;</span><br><span class="line">            &lt;value&gt;true&lt;/value&gt;</span><br><span class="line">        &lt;/property&gt;</span><br><span class="line">    &lt;/configuration&gt;</span><br><span class="line"></span><br><span class="line">7.配置 执行引擎</span><br><span class="line"></span><br><span class="line">8.初始化元数据库</span><br><span class="line">	$HIVE_HOME/bin schematool -initSchema -dbType mysql -verbose</span><br><span class="line">	</span><br><span class="line">9.启动metastore和hiveserver2 如果 hive-site.xml中 没有配置 hive.metastore.uris 参数就无需启动</span><br><span class="line">	Hive 2.x以上版本，要先启动这两个服务，否则会报错</span><br><span class="line">	Unable to instantiate org.apache.hadoop.hive.ql.metadata.SessionHiveMetaStoreClient</span><br><span class="line">	启动 metastore和hiveserver2 脚本</span><br><span class="line">    #!/bin/bash</span><br><span class="line">    HIVE_LOG_DIR=$HIVE_HOME/logs</span><br><span class="line"></span><br><span class="line">    mkdir -p $HIVE_LOG_DIR</span><br><span class="line"></span><br><span class="line">    #检查进程是否运行正常，参数1为进程名，参数2为进程端口</span><br><span class="line">    function check_process()</span><br><span class="line">    &#123;</span><br><span class="line">        pid=$(ps -ef 2&gt;/dev/null | grep -v grep | grep -i $1 | awk &#x27;&#123;print $2&#125;&#x27;)</span><br><span class="line">        ppid=$(netstat -nltp 2&gt;/dev/null | grep $2 | awk &#x27;&#123;print $7&#125;&#x27; | cut -d &#x27;/&#x27; -f 1)</span><br><span class="line">        echo $pid</span><br><span class="line">        [[ &quot;$pid&quot; =~ &quot;$ppid&quot; ]] &amp;&amp; [ &quot;$ppid&quot; ] &amp;&amp; return 0 || return 1</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function hive_start()</span><br><span class="line">    &#123;</span><br><span class="line">        metapid=$(check_process HiveMetastore 9083)</span><br><span class="line">        cmd=&quot;nohup hive --service metastore &gt;$HIVE_LOG_DIR/metastore.log 2&gt;&amp;1 &amp;&quot;</span><br><span class="line">        cmd=$cmd&quot; sleep4; hdfs dfsadmin -safemode wait &gt;/dev/null 2&gt;&amp;1&quot;</span><br><span class="line">        [ -z &quot;$metapid&quot; ] &amp;&amp; eval $cmd || echo &quot;Metastroe服务已启动&quot;</span><br><span class="line">        server2pid=$(check_process HiveServer2 10000)</span><br><span class="line">        cmd=&quot;nohup hive --service hiveserver2 &gt;$HIVE_LOG_DIR/hiveServer2.log 2&gt;&amp;1 &amp;&quot;</span><br><span class="line">        [ -z &quot;$server2pid&quot; ] &amp;&amp; eval $cmd || echo &quot;HiveServer2服务已启动&quot;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function hive_stop()</span><br><span class="line">    &#123;</span><br><span class="line">        metapid=$(check_process HiveMetastore 9083)</span><br><span class="line">        [ &quot;$metapid&quot; ] &amp;&amp; kill $metapid || echo &quot;Metastore服务未启动&quot;</span><br><span class="line">        server2pid=$(check_process HiveServer2 10000)</span><br><span class="line">        [ &quot;$server2pid&quot; ] &amp;&amp; kill $server2pid || echo &quot;HiveServer2服务未启动&quot;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    case $1 in</span><br><span class="line">    &quot;start&quot;)</span><br><span class="line">        hive_start</span><br><span class="line">        ;;</span><br><span class="line">    &quot;stop&quot;)</span><br><span class="line">        hive_stop</span><br><span class="line">        ;;</span><br><span class="line">    &quot;restart&quot;)</span><br><span class="line">        hive_stop</span><br><span class="line">        sleep 2</span><br><span class="line">        hive_start</span><br><span class="line">        ;;</span><br><span class="line">    &quot;status&quot;)</span><br><span class="line">        check_process HiveMetastore 9083 &gt;/dev/null &amp;&amp; echo &quot;Metastore服务运行正常&quot; || echo &quot;Metastore服务运行异常&quot;</span><br><span class="line">        check_process HiveServer2 10000 &gt;/dev/null &amp;&amp; echo &quot;HiveServer2服务运行正常&quot; || echo &quot;HiveServer2服务运行异常&quot;</span><br><span class="line">        ;;</span><br><span class="line">    *)</span><br><span class="line">        echo Invalid Args!</span><br><span class="line">        echo &#x27;Usage: &#x27;$(basename $0)&#x27; start|stop|restart|status&#x27;</span><br><span class="line">        ;;</span><br><span class="line">    esac</span><br><span class="line">    #!/bin/bash</span><br><span class="line">    HIVE_LOG_DIR=$HIVE_HOME/logs</span><br><span class="line"></span><br><span class="line">    mkdir -p $HIVE_LOG_DIR</span><br><span class="line"></span><br><span class="line">    #检查进程是否运行正常，参数1为进程名，参数2为进程端口</span><br><span class="line">    function check_process()</span><br><span class="line">    &#123;</span><br><span class="line">        pid=$(ps -ef 2&gt;/dev/null | grep -v grep | grep -i $1 | awk &#x27;&#123;print $2&#125;&#x27;)</span><br><span class="line">        ppid=$(netstat -nltp 2&gt;/dev/null | grep $2 | awk &#x27;&#123;print $7&#125;&#x27; | cut -d &#x27;/&#x27; -f 1)</span><br><span class="line">        echo $pid</span><br><span class="line">        [[ &quot;$pid&quot; =~ &quot;$ppid&quot; ]] &amp;&amp; [ &quot;$ppid&quot; ] &amp;&amp; return 0 || return 1</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function hive_start()</span><br><span class="line">    &#123;</span><br><span class="line">        metapid=$(check_process HiveMetastore 9083)</span><br><span class="line">        cmd=&quot;nohup hive --service metastore &gt;$HIVE_LOG_DIR/metastore.log 2&gt;&amp;1 &amp;&quot;</span><br><span class="line">        cmd=$cmd&quot; sleep4; hdfs dfsadmin -safemode wait &gt;/dev/null 2&gt;&amp;1&quot;</span><br><span class="line">        [ -z &quot;$metapid&quot; ] &amp;&amp; eval $cmd || echo &quot;Metastroe服务已启动&quot;</span><br><span class="line">        server2pid=$(check_process HiveServer2 10000)</span><br><span class="line">        cmd=&quot;nohup hive --service hiveserver2 &gt;$HIVE_LOG_DIR/hiveServer2.log 2&gt;&amp;1 &amp;&quot;</span><br><span class="line">        [ -z &quot;$server2pid&quot; ] &amp;&amp; eval $cmd || echo &quot;HiveServer2服务已启动&quot;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function hive_stop()</span><br><span class="line">    &#123;</span><br><span class="line">        metapid=$(check_process HiveMetastore 9083)</span><br><span class="line">        [ &quot;$metapid&quot; ] &amp;&amp; kill $metapid || echo &quot;Metastore服务未启动&quot;</span><br><span class="line">        server2pid=$(check_process HiveServer2 10000)</span><br><span class="line">        [ &quot;$server2pid&quot; ] &amp;&amp; kill $server2pid || echo &quot;HiveServer2服务未启动&quot;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    case $1 in</span><br><span class="line">    &quot;start&quot;)</span><br><span class="line">        hive_start</span><br><span class="line">        ;;</span><br><span class="line">    &quot;stop&quot;)</span><br><span class="line">        hive_stop</span><br><span class="line">        ;;</span><br><span class="line">    &quot;restart&quot;)</span><br><span class="line">        hive_stop</span><br><span class="line">        sleep 2</span><br><span class="line">        hive_start</span><br><span class="line">        ;;</span><br><span class="line">    &quot;status&quot;)</span><br><span class="line">        check_process HiveMetastore 9083 &gt;/dev/null &amp;&amp; echo &quot;Metastore服务运行正常&quot; || echo &quot;Metastore服务运行异常&quot;</span><br><span class="line">        check_process HiveServer2 10000 &gt;/dev/null &amp;&amp; echo &quot;HiveServer2服务运行正常&quot; || echo &quot;HiveServer2服务运行异常&quot;</span><br><span class="line">        ;;</span><br><span class="line">    *)</span><br><span class="line">        echo Invalid Args!</span><br><span class="line">        echo &#x27;Usage: &#x27;$(basename $0)&#x27; start|stop|restart|status&#x27;</span><br><span class="line">        ;;</span><br><span class="line">    esac</span><br><span class="line"></span><br><span class="line">10.启动Hive后台服务</span><br><span class="line">	hiveservices.sh start</span><br><span class="line">	</span><br><span class="line">11.启动beeline客户端</span><br><span class="line">	 beeline -u jdbc:hive2://hadoop102:10000 -n zero</span><br><span class="line"></span><br><span class="line">12.配置日志位置</span><br><span class="line">	mv hive-log4j.properties.template hive-log4j.properties</span><br><span class="line">	在hive-log4j.properties文件中修改log存放位置</span><br><span class="line">	hive.log.dir=/opt/module/hive/logs</span><br></pre></td></tr></table></figure>
-
-
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line">Tez引擎</span><br><span class="line">1.解压</span><br><span class="line">	tar -zxvf /opt/software/tez-0.10.1-SNAPSHOT-minimal.tar.gz -C /opt/module/tez</span><br><span class="line">2.上传tez依赖到HDFS</span><br><span class="line">	hadoop fs -mkdir /tez</span><br><span class="line">	hadoop fs -put /opt/software/tez-0.10.1-SNAPSHOT.tar.gz /tez</span><br><span class="line">3.新建tez-site.xml</span><br><span class="line">	vim $HADOOP_HOME/etc/hadoop/tez-site.xml</span><br><span class="line">	添加如下内容</span><br><span class="line">    &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line">    &lt;?xml-stylesheet type=&quot;text/xsl&quot; href=&quot;configuration.xsl&quot;?&gt;</span><br><span class="line">    &lt;configuration&gt;</span><br><span class="line">    &lt;property&gt;</span><br><span class="line">        &lt;name&gt;tez.lib.uris&lt;/name&gt;</span><br><span class="line">        &lt;value&gt;$&#123;fs.defaultFS&#125;/tez/tez-0.10.1-SNAPSHOT.tar.gz&lt;/value&gt;</span><br><span class="line">    &lt;/property&gt;</span><br><span class="line">    &lt;property&gt;</span><br><span class="line">         &lt;name&gt;tez.use.cluster.hadoop-libs&lt;/name&gt;</span><br><span class="line">         &lt;value&gt;true&lt;/value&gt;</span><br><span class="line">    &lt;/property&gt;</span><br><span class="line">    &lt;property&gt;</span><br><span class="line">         &lt;name&gt;tez.am.resource.memory.mb&lt;/name&gt;</span><br><span class="line">         &lt;value&gt;1024&lt;/value&gt;</span><br><span class="line">    &lt;/property&gt;</span><br><span class="line">    &lt;property&gt;</span><br><span class="line">         &lt;name&gt;tez.am.resource.cpu.vcores&lt;/name&gt;</span><br><span class="line">         &lt;value&gt;1&lt;/value&gt;</span><br><span class="line">    &lt;/property&gt;</span><br><span class="line">    &lt;property&gt;</span><br><span class="line">         &lt;name&gt;tez.container.max.java.heap.fraction&lt;/name&gt;</span><br><span class="line">         &lt;value&gt;0.4&lt;/value&gt;</span><br><span class="line">    &lt;/property&gt;</span><br><span class="line">    &lt;property&gt;</span><br><span class="line">         &lt;name&gt;tez.task.resource.memory.mb&lt;/name&gt;</span><br><span class="line">         &lt;value&gt;1024&lt;/value&gt;</span><br><span class="line">    &lt;/property&gt;</span><br><span class="line">    &lt;property&gt;</span><br><span class="line">         &lt;name&gt;tez.task.resource.cpu.vcores&lt;/name&gt;</span><br><span class="line">         &lt;value&gt;1&lt;/value&gt;</span><br><span class="line">    &lt;/property&gt;</span><br><span class="line">    &lt;/configuration&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">4.编辑hadoop-env.sh</span><br><span class="line">	vim $HADOOP_HOME/etc/hadoop/shellprofile.d/tez.sh</span><br><span class="line">	#添加Tez的Jar包相关信息</span><br><span class="line">    hadoop_add_profile tez</span><br><span class="line">    function _tez_hadoop_classpath</span><br><span class="line">    &#123;</span><br><span class="line">        hadoop_add_classpath &quot;$HADOOP_HOME/etc/hadoop&quot; after</span><br><span class="line">        hadoop_add_classpath &quot;/opt/module/tez/*&quot; after</span><br><span class="line">        hadoop_add_classpath &quot;/opt/module/tez/lib/*&quot; after</span><br><span class="line">    &#125;</span><br><span class="line">5.修改Hive的计算引擎</span><br><span class="line">	vim $HIVE_HOME/conf/hive-site.xml</span><br><span class="line">	#添加如下内容</span><br><span class="line">    &lt;property&gt;</span><br><span class="line">        &lt;name&gt;hive.execution.engine&lt;/name&gt;</span><br><span class="line">    	&lt;value&gt;tez&lt;/value&gt;</span><br><span class="line">    &lt;/property&gt;</span><br><span class="line">    &lt;property&gt;</span><br><span class="line">        &lt;name&gt;hive.tez.container.size&lt;/name&gt;</span><br><span class="line">        &lt;value&gt;1024&lt;/value&gt;</span><br><span class="line">    &lt;/property&gt;</span><br><span class="line">6.解决日志Jar包冲突</span><br><span class="line">	rm /opt/module/tez/lib/slf4j-log4j12-1.7.10.jar</span><br><span class="line">	</span><br></pre></td></tr></table></figure>
-
-
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line">spark 引擎</span><br><span class="line">https://www.apache.org/dyn/closer.lua/spark/spark-2.4.5/spark-2.4.5.tgz</span><br><span class="line"></span><br><span class="line">1.解压</span><br><span class="line">	tar -zxf /opt/software/spark-2.4.5-bin-without-hive.tgz -C /opt/module</span><br><span class="line">	mv /opt/module/spark-2.4.5-bin-without-hive /opt/module/spark</span><br><span class="line">	</span><br><span class="line">2.配置SPARK_HOME环境变量</span><br><span class="line">	sudo vim /etc/profile.d/my_env.sh</span><br><span class="line">	添加如下内容</span><br><span class="line">	export SPARK_HOME=/opt/module/spark</span><br><span class="line">	export PATH=$PATH:$SPARK_HOME/bin</span><br><span class="line">	</span><br><span class="line">3.刷新</span><br><span class="line">	source /etc/profile.d/my_env.sh</span><br><span class="line">	</span><br><span class="line">4.配置spark运行环境	</span><br><span class="line">	mv /opt/module/spark/conf/spark-env.sh.template /opt/module/spark/conf/spark-env.sh	</span><br><span class="line">	vim /opt/module/spark/conf/spark-env.sh</span><br><span class="line">	添加如下内容</span><br><span class="line">	export SPARK_DIST_CLASSPATH=$(hadoop classpath)</span><br><span class="line">	</span><br><span class="line">5.连接sparkjar包到hive，如果hive中已存在则跳过	</span><br><span class="line">	ln -s /opt/module/spark/jars/scala-library-2.11.12.jar /opt/module/hive/lib/scala-library-2.11.12.jar</span><br><span class="line">	ln -s /opt/module/spark/jars/spark-core_2.11-2.4.5.jar /opt/module/hive/lib/spark-core_2.11-2.4.5.jar</span><br><span class="line">	ln -s /opt/module/spark/jars/spark-network-common_2.11-2.4.5.jar /opt/module/hive/lib/spark-network-common_2.11-2.4.5.jar</span><br><span class="line">	</span><br><span class="line">6.新建spark配置文件</span><br><span class="line">	vim /opt/module/hive/conf/spark-defaults.conf</span><br><span class="line">	添加如下内容</span><br><span class="line">    spark.master                                    yarn</span><br><span class="line">    spark.master                                    yarn</span><br><span class="line">    spark.eventLog.enabled                          true</span><br><span class="line">    spark.eventLog.dir                              hdfs://hadoop102:8020/spark-history</span><br><span class="line">    spark.driver.memory                             2g</span><br><span class="line">    spark.executor.memory                           2g</span><br><span class="line"></span><br><span class="line">    spark.yarn.historyServer.address                hadoop102:18080</span><br><span class="line">    spark.history.ui.port                           18080</span><br><span class="line"></span><br><span class="line">7.上传Spark依赖到HDFS</span><br><span class="line">	hadoop fs -put /opt/module/spark/jars/* /spark-jars</span><br><span class="line"></span><br><span class="line">8.修改Hive的计算引擎</span><br><span class="line">	vim $HIVE_HOME/conf/hive-site.xml</span><br><span class="line">	添加如下内容</span><br><span class="line">    &lt;!--Spark依赖位置--&gt;</span><br><span class="line">    &lt;property&gt;</span><br><span class="line">    &lt;name&gt;spark.yarn.jars&lt;/name&gt;</span><br><span class="line">    &lt;value&gt;hdfs://hadoop102:8020/spark-jars/*&lt;/value&gt;</span><br><span class="line">    &lt;/property&gt;</span><br><span class="line">    &lt;!--Hive执行引擎--&gt;</span><br><span class="line">    &lt;property&gt;</span><br><span class="line">    &lt;name&gt;hive.execution.engine&lt;/name&gt;</span><br><span class="line">    &lt;value&gt;spark&lt;/value&gt;</span><br><span class="line">    &lt;/property&gt;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
-
-
-
-
-
-
-
-
-
-      
-
-
-       
-
-      <!-- 增加版权声明 -->
-      <!--  
-      
-      
-        <div class="declare" hidden="hidden"></div>
-      
--->
-      <!-- 增加版权声明结束 -->
-
-
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">sql</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">大数据</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">hive</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/09/12/hive%E5%AE%89%E8%A3%85/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Spring-IOC-容器源码分析" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/09/12/Spring-IOC-%E5%AE%B9%E5%99%A8%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/">Spring+IOC+容器源码分析</a>
-    </h1>
-  
-
-
-        <!-- 单篇文章点击量 -->
-        <!--显示阅读次数-->
+          <br/>
+          <a class="cloud-tie-join-count" href="javascript:void(0);" style="color:gray;font-size:14px;">
+          <span class="icon-sort"></span>
+          <span id="busuanzi_container_page_pv" style="color:#ef7522;font-size:14px;">
+            👁 <span id="busuanzi_value_page_pv"></span> &nbsp;&nbsp;
+          </span>
+          </a>
         
         <!--显示阅读次数完毕-->
 
@@ -778,7 +671,24 @@
       
 
 
-       
+      
+        
+          <div class="essayending">
+            <div>
+             <div style="text-align:center;color: #ccc;font-size:22px;">
+             <br/>
+             <br/>
+             -------------<i class="fa fa-paw"></i>感谢您的阅读-------------
+             <br/>
+             <br/>
+              <br/>
+              <br/>
+             </div>
+            </div>
+          </div>
+        
+ 
+     
 
       <!-- 增加版权声明 -->
       <!--  
@@ -791,6 +701,27 @@
 
 
 
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
       
     </div>
     <div class="article-info article-info-index">
@@ -818,16 +749,84 @@
       
 
       
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/09/12/Spring-IOC-%E5%AE%B9%E5%99%A8%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/">展开全文 >></a>
-        </p>
-      
 
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2021/09/12/Spring-IOC-%E5%AE%B9%E5%99%A8%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
       
       <div class="clearfix"></div>
     </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/2021/09/12/hive%E5%AE%89%E8%A3%85/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          hive安装
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2021/09/12/SQL-%E4%B8%80-%E6%9F%A5%E8%AF%A2%E8%AF%AD%E5%8F%A5%EF%BC%88%E4%B8%80%EF%BC%89%E5%9F%BA%E6%9C%AC%E6%9F%A5%E8%AF%A2/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">SQL(一)查询语句（一）基本查询</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -847,410 +846,14 @@
 
 
 
-
   
-    <article id="flink基础（二十五）：flink-SQL-一-查询语句（一）基本查询" class="article article-type-flink基础（二十五）：flink  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/09/12/SQL-%E4%B8%80-%E6%9F%A5%E8%AF%A2%E8%AF%AD%E5%8F%A5%EF%BC%88%E4%B8%80%EF%BC%89%E5%9F%BA%E6%9C%AC%E6%9F%A5%E8%AF%A2/">SQL(一)查询语句（一）基本查询</a>
-    </h1>
   
 
-
-        <!-- 单篇文章点击量 -->
-        <!--显示阅读次数-->
-        
-        <!--显示阅读次数完毕-->
-
-        
-        <a href="/2021/09/12/SQL-%E4%B8%80-%E6%9F%A5%E8%AF%A2%E8%AF%AD%E5%8F%A5%EF%BC%88%E4%B8%80%EF%BC%89%E5%9F%BA%E6%9C%AC%E6%9F%A5%E8%AF%A2/" class="archive-article-date">
-  	<time datetime="2021-09-12T08:30:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-09-12</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>来源：<a target="_blank" rel="noopener" href="https://ci.apache.org/projects/flink/flink-docs-release-1.11/zh/dev/table/sql/queries.html">https://ci.apache.org/projects/flink/flink-docs-release-1.11/zh/dev/table/sql/queries.html</a></p>
-<h3 id="0-简介"><a href="#0-简介" class="headerlink" title="0 简介"></a>0 简介</h3><p>SELECT 语句和 VALUES 语句需要使用 <code>TableEnvironment</code> 的 <code>sqlQuery()</code> 方法加以指定。这个方法会以 <code>Table</code> 的形式返回 SELECT （或 VALUE）的查询结果。<code>Table</code> 可以被用于 <a target="_blank" rel="noopener" href="https://ci.apache.org/projects/flink/flink-docs-release-1.11/zh/dev/table/common.html#mixing-table-api-and-sql">随后的SQL 与 Table API 查询</a> 、 <a target="_blank" rel="noopener" href="https://ci.apache.org/projects/flink/flink-docs-release-1.11/zh/dev/table/common.html#integration-with-datastream-and-dataset-api">转换为 DataSet 或 DataStream </a>或 <a target="_blank" rel="noopener" href="https://ci.apache.org/projects/flink/flink-docs-release-1.11/zh/dev/table/common.html#emit-a-table">输出到 TableSink </a>。SQL 与 Table API 的查询可以进行无缝融合、整体优化并翻译为单一的程序。</p>
-<p>为了可以在 SQL 查询中访问到表，你需要先 <a target="_blank" rel="noopener" href="https://ci.apache.org/projects/flink/flink-docs-release-1.11/zh/dev/table/common.html#register-tables-in-the-catalog">在 TableEnvironment 中注册表 </a>。表可以通过 <a target="_blank" rel="noopener" href="https://ci.apache.org/projects/flink/flink-docs-release-1.11/zh/dev/table/common.html#register-a-tablesource">TableSource</a>、 <a target="_blank" rel="noopener" href="https://ci.apache.org/projects/flink/flink-docs-release-1.11/zh/dev/table/common.html#register-a-table">Table</a>、<a target="_blank" rel="noopener" href="https://ci.apache.org/projects/flink/flink-docs-release-1.11/zh/dev/table/sql/create.html">CREATE TABLE 语句</a>、 <a target="_blank" rel="noopener" href="https://ci.apache.org/projects/flink/flink-docs-release-1.11/zh/dev/table/common.html#register-a-datastream-or-dataset-as-table">DataStream 或 DataSet</a> 注册。 用户也可以通过 <a target="_blank" rel="noopener" href="https://ci.apache.org/projects/flink/flink-docs-release-1.11/zh/dev/table/catalogs.html">向 TableEnvironment 中注册 catalog </a>的方式指定数据源的位置。</p>
-<p>为方便起见 <code>Table.toString()</code> 将会在其 <code>TableEnvironment</code> 中自动使用一个唯一的名字注册表并返回表名。 因此， <code>Table</code> 对象可以如下文所示样例，直接内联到 SQL 语句中。</p>
-<p>注意： 查询若包括了不支持的 SQL 特性，将会抛出 <code>TableException</code>。批处理和流处理所支持的 SQL 特性将会在下述章节中列出。</p>
-<h3 id="1-指定查询"><a href="#1-指定查询" class="headerlink" title="1 指定查询"></a>1 指定查询</h3><p>以下示例显示如何在已注册和内联表上指定 SQL 查询。</p>
-<p><a href="javascript:void(0);"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">val env = StreamExecutionEnvironment.getExecutionEnvironment</span><br><span class="line">val tableEnv = StreamTableEnvironment.create(env)</span><br><span class="line"></span><br><span class="line">//  从外部数据源读取 DataStream </span><br><span class="line">val ds: DataStream[(Long, String, Integer)] = env.addSource(...)</span><br><span class="line"></span><br><span class="line">// 使用 SQL 查询内联的（未注册的）表</span><br><span class="line">val table = ds.toTable(tableEnv, $&quot;user&quot;, $&quot;product&quot;, $&quot;amount&quot;)</span><br><span class="line">val result = tableEnv.sqlQuery(</span><br><span class="line">  s&quot;SELECT SUM(amount) FROM $table WHERE product LIKE &#x27;%Rubber%&#x27;&quot;)</span><br><span class="line"></span><br><span class="line">// 使用名称 &quot;Orders&quot; 注册一个 DataStream </span><br><span class="line">tableEnv.createTemporaryView(&quot;Orders&quot;, ds, $&quot;user&quot;, $&quot;product&quot;, $&quot;amount&quot;)</span><br><span class="line">// 在表上执行 SQL 查询并得到以新表返回的结果</span><br><span class="line">val result2 = tableEnv.sqlQuery(</span><br><span class="line">  &quot;SELECT product, amount FROM Orders WHERE product LIKE &#x27;%Rubber%&#x27;&quot;)</span><br><span class="line"></span><br><span class="line">// 创建并注册一个 TableSink</span><br><span class="line">val schema = new Schema()</span><br><span class="line">    .field(&quot;product&quot;, DataTypes.STRING())</span><br><span class="line">    .field(&quot;amount&quot;, DataTypes.INT())</span><br><span class="line"></span><br><span class="line">tableEnv.connect(new FileSystem().path(&quot;/path/to/file&quot;))</span><br><span class="line">    .withFormat(...)</span><br><span class="line">    .withSchema(schema)</span><br><span class="line">    .createTemporaryTable(&quot;RubberOrders&quot;)</span><br><span class="line"></span><br><span class="line">// 在表上执行插入操作，并把结果发出到 TableSink</span><br><span class="line">tableEnv.executeSql(</span><br><span class="line">  &quot;INSERT INTO RubberOrders SELECT product, amount FROM Orders WHERE product LIKE &#x27;%Rubber%&#x27;&quot;)</span><br></pre></td></tr></table></figure>
-
-<p><a href="javascript:void(0);"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></p>
-<p>2 执行查询</p>
-<p>SELECT 语句或者 VALUES 语句可以通过 <code>TableEnvironment.executeSql()</code> 方法来执行，将选择的结果收集到本地。该方法返回 <code>TableResult</code> 对象用于包装查询的结果。和 SELECT 语句很像，一个 <code>Table</code> 对象可以通过 <code>Table.execute()</code> 方法执行从而将 <code>Table</code> 的内容收集到本地客户端。 <code>TableResult.collect()</code> 方法返回一个可以关闭的行迭代器。除非所有的数据都被收集到本地，否则一个查询作业永远不会结束。所以我们应该通过 <code>CloseableIterator#close()</code> 方法主动地关闭作业以防止资源泄露。 我们还可以通过 <code>TableResult.print()</code> 方法将查询结果打印到本地控制台。<code>TableResult</code> 中的结果数据只能被访问一次，因此一个 <code>TableResult</code> 实例中，<code>collect()</code> 方法和 <code>print()</code> 方法不能被同时使用。</p>
-<p>对于流模式，<code>TableResult.collect()</code> 方法或者 <code>TableResult.print</code> 方法保证端到端精确一次的数据交付。这就要求开启 checkpointing。默认情况下 checkpointing 是禁止的，我们可以通过 <code>TableConfig</code> 设置 checkpointing 相关属性（请参考 <a target="_blank" rel="noopener" href="https://ci.apache.org/projects/flink/flink-docs-release-1.11/zh/ops/config.html#checkpointing">checkpointing 配置</a>）来开启 checkpointing。 因此一条结果数据只有在其对应的 checkpointing 完成后才能在客户端被访问。</p>
-<p>注意： 对于流模式，当前仅支持追加模式的查询语句，并且应该开启 checkpoint。因为一条结果只有在其对应的 checkpoint 完成之后才能被客户端访问到。</p>
-<p><a href="javascript:void(0);"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">val env = StreamExecutionEnvironment.getExecutionEnvironment()</span><br><span class="line">val tableEnv = StreamTableEnvironment.create(env, settings)</span><br><span class="line">// enable checkpointing</span><br><span class="line">tableEnv.getConfig.getConfiguration.set(</span><br><span class="line">  ExecutionCheckpointingOptions.CHECKPOINTING_MODE, CheckpointingMode.EXACTLY_ONCE)</span><br><span class="line">tableEnv.getConfig.getConfiguration.set(</span><br><span class="line">  ExecutionCheckpointingOptions.CHECKPOINTING_INTERVAL, Duration.ofSeconds(10))</span><br><span class="line"></span><br><span class="line">tableEnv.executeSql(&quot;CREATE TABLE Orders (`user` BIGINT, product STRING, amount INT) WITH (...)&quot;)</span><br><span class="line"></span><br><span class="line">// execute SELECT statement</span><br><span class="line">val tableResult1 = tableEnv.executeSql(&quot;SELECT * FROM Orders&quot;)</span><br><span class="line">val it = tableResult1.collect()</span><br><span class="line">try while (it.hasNext) &#123;</span><br><span class="line">  val row = it.next</span><br><span class="line">  // handle row</span><br><span class="line">&#125;</span><br><span class="line">finally it.close() // close the iterator to avoid resource leak</span><br><span class="line"></span><br><span class="line">// execute Table</span><br><span class="line">val tableResult2 = tableEnv.sqlQuery(&quot;SELECT * FROM Orders&quot;).execute()</span><br><span class="line">tableResult2.print()</span><br></pre></td></tr></table></figure>
-
-<p><a href="javascript:void(0);"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></p>
-<h3 id="3-语法"><a href="#3-语法" class="headerlink" title="3 语法"></a>3 语法</h3><p>Flink 通过支持标准 ANSI SQL的 <a target="_blank" rel="noopener" href="https://calcite.apache.org/docs/reference.html">Apache Calcite</a> 解析 SQL。</p>
-<p>以下 BNF-语法 描述了批处理和流处理查询中所支持的 SQL 特性的超集。其中 <a target="_blank" rel="noopener" href="https://ci.apache.org/projects/flink/flink-docs-release-1.11/zh/dev/table/sql/queries.html#%E6%93%8D%E4%BD%9C%E7%AC%A6">操作符</a> 章节展示了所支持的特性的样例，并指明了哪些特性仅适用于批处理或流处理。</p>
-<p><a href="javascript:void(0);"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br></pre></td><td class="code"><pre><span class="line">query:</span><br><span class="line">  values</span><br><span class="line">  | &#123;</span><br><span class="line">      select</span><br><span class="line">      | selectWithoutFrom</span><br><span class="line">      | query UNION [ ALL ] query</span><br><span class="line">      | query EXCEPT query</span><br><span class="line">      | query INTERSECT query</span><br><span class="line">    &#125;</span><br><span class="line">    [ ORDER BY orderItem [, orderItem ]* ]</span><br><span class="line">    [ LIMIT &#123; count | ALL &#125; ]</span><br><span class="line">    [ OFFSET start &#123; ROW | ROWS &#125; ]</span><br><span class="line">    [ FETCH &#123; FIRST | NEXT &#125; [ count ] &#123; ROW | ROWS &#125; ONLY]</span><br><span class="line"></span><br><span class="line">orderItem:</span><br><span class="line">  expression [ ASC | DESC ]</span><br><span class="line"></span><br><span class="line">select:</span><br><span class="line">  SELECT [ ALL | DISTINCT ]</span><br><span class="line">  &#123; * | projectItem [, projectItem ]* &#125;</span><br><span class="line">  FROM tableExpression</span><br><span class="line">  [ WHERE booleanExpression ]</span><br><span class="line">  [ GROUP BY &#123; groupItem [, groupItem ]* &#125; ]</span><br><span class="line">  [ HAVING booleanExpression ]</span><br><span class="line">  [ WINDOW windowName AS windowSpec [, windowName AS windowSpec ]* ]</span><br><span class="line"></span><br><span class="line">selectWithoutFrom:</span><br><span class="line">  SELECT [ ALL | DISTINCT ]</span><br><span class="line">  &#123; * | projectItem [, projectItem ]* &#125;</span><br><span class="line"></span><br><span class="line">projectItem:</span><br><span class="line">  expression [ [ AS ] columnAlias ]</span><br><span class="line">  | tableAlias . *</span><br><span class="line"></span><br><span class="line">tableExpression:</span><br><span class="line">  tableReference [, tableReference ]*</span><br><span class="line">  | tableExpression [ NATURAL ] [ LEFT | RIGHT | FULL ] JOIN tableExpression [ joinCondition ]</span><br><span class="line"></span><br><span class="line">joinCondition:</span><br><span class="line">  ON booleanExpression</span><br><span class="line">  | USING &#x27;(&#x27; column [, column ]* &#x27;)&#x27;</span><br><span class="line"></span><br><span class="line">tableReference:</span><br><span class="line">  tablePrimary</span><br><span class="line">  [ matchRecognize ]</span><br><span class="line">  [ [ AS ] alias [ &#x27;(&#x27; columnAlias [, columnAlias ]* &#x27;)&#x27; ] ]</span><br><span class="line"></span><br><span class="line">tablePrimary:</span><br><span class="line">  [ TABLE ] [ [ catalogName . ] schemaName . ] tableName [ dynamicTableOptions ]</span><br><span class="line">  | LATERAL TABLE &#x27;(&#x27; functionName &#x27;(&#x27; expression [, expression ]* &#x27;)&#x27; &#x27;)&#x27;</span><br><span class="line">  | UNNEST &#x27;(&#x27; expression &#x27;)&#x27;</span><br><span class="line"></span><br><span class="line">dynamicTableOptions:</span><br><span class="line">  /*+ OPTIONS(key=val [, key=val]*) */</span><br><span class="line"></span><br><span class="line">key:</span><br><span class="line">  stringLiteral</span><br><span class="line"></span><br><span class="line">val:</span><br><span class="line">  stringLiteral</span><br><span class="line"></span><br><span class="line">values:</span><br><span class="line">  VALUES expression [, expression ]*</span><br><span class="line"></span><br><span class="line">groupItem:</span><br><span class="line">  expression</span><br><span class="line">  | &#x27;(&#x27; &#x27;)&#x27;</span><br><span class="line">  | &#x27;(&#x27; expression [, expression ]* &#x27;)&#x27;</span><br><span class="line">  | CUBE &#x27;(&#x27; expression [, expression ]* &#x27;)&#x27;</span><br><span class="line">  | ROLLUP &#x27;(&#x27; expression [, expression ]* &#x27;)&#x27;</span><br><span class="line">  | GROUPING SETS &#x27;(&#x27; groupItem [, groupItem ]* &#x27;)&#x27;</span><br><span class="line"></span><br><span class="line">windowRef:</span><br><span class="line">    windowName</span><br><span class="line">  | windowSpec</span><br><span class="line"></span><br><span class="line">windowSpec:</span><br><span class="line">    [ windowName ]</span><br><span class="line">    &#x27;(&#x27;</span><br><span class="line">    [ ORDER BY orderItem [, orderItem ]* ]</span><br><span class="line">    [ PARTITION BY expression [, expression ]* ]</span><br><span class="line">    [</span><br><span class="line">        RANGE numericOrIntervalExpression &#123;PRECEDING&#125;</span><br><span class="line">      | ROWS numericExpression &#123;PRECEDING&#125;</span><br><span class="line">    ]</span><br><span class="line">    &#x27;)&#x27;</span><br><span class="line"></span><br><span class="line">matchRecognize:</span><br><span class="line">      MATCH_RECOGNIZE &#x27;(&#x27;</span><br><span class="line">      [ PARTITION BY expression [, expression ]* ]</span><br><span class="line">      [ ORDER BY orderItem [, orderItem ]* ]</span><br><span class="line">      [ MEASURES measureColumn [, measureColumn ]* ]</span><br><span class="line">      [ ONE ROW PER MATCH ]</span><br><span class="line">      [ AFTER MATCH</span><br><span class="line">            ( SKIP TO NEXT ROW</span><br><span class="line">            | SKIP PAST LAST ROW</span><br><span class="line">            | SKIP TO FIRST variable</span><br><span class="line">            | SKIP TO LAST variable</span><br><span class="line">            | SKIP TO variable )</span><br><span class="line">      ]</span><br><span class="line">      PATTERN &#x27;(&#x27; pattern &#x27;)&#x27;</span><br><span class="line">      [ WITHIN intervalLiteral ]</span><br><span class="line">      DEFINE variable AS condition [, variable AS condition ]*</span><br><span class="line">      &#x27;)&#x27;</span><br><span class="line"></span><br><span class="line">measureColumn:</span><br><span class="line">      expression AS alias</span><br><span class="line"></span><br><span class="line">pattern:</span><br><span class="line">      patternTerm [ &#x27;|&#x27; patternTerm ]*</span><br><span class="line"></span><br><span class="line">patternTerm:</span><br><span class="line">      patternFactor [ patternFactor ]*</span><br><span class="line"></span><br><span class="line">patternFactor:</span><br><span class="line">      variable [ patternQuantifier ]</span><br><span class="line"></span><br><span class="line">patternQuantifier:</span><br><span class="line">      &#x27;*&#x27;</span><br><span class="line">  |   &#x27;*?&#x27;</span><br><span class="line">  |   &#x27;+&#x27;</span><br><span class="line">  |   &#x27;+?&#x27;</span><br><span class="line">  |   &#x27;?&#x27;</span><br><span class="line">  |   &#x27;??&#x27;</span><br><span class="line">  |   &#x27;&#123;&#x27; &#123; [ minRepeat ], [ maxRepeat ] &#125; &#x27;&#125;&#x27; [&#x27;?&#x27;]</span><br><span class="line">  |   &#x27;&#123;&#x27; repeat &#x27;&#125;&#x27;</span><br></pre></td></tr></table></figure>
-
-<p><a href="javascript:void(0);"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></p>
-<p>Flink SQL 对于标识符（表、属性、函数名）有类似于 Java 的词法约定:</p>
-<ul>
-<li>不管是否引用标识符，都保留标识符的大小写。</li>
-<li>且标识符需区分大小写。</li>
-<li>与 Java 不一样的地方在于，通过反引号，可以允许标识符带有非字母的字符（如：<code>&quot;SELECT a AS </code>my field<code> FROM t&quot;</code>）。</li>
-</ul>
-<p>字符串文本常量需要被单引号包起来（如 <code>SELECT &#39;Hello World&#39;</code> ）。两个单引号表示转移（如 <code>SELECT &#39;It&#39;&#39;s me.&#39;</code>）。字符串文本常量支持 Unicode 字符，如需明确使用 Unicode 编码，请使用以下语法：</p>
-<ul>
-<li>使用反斜杠（<code>\</code>）作为转义字符（默认）：<code>SELECT U&amp;&#39;\263A&#39;</code></li>
-<li>使用自定义的转义字符： <code>SELECT U&amp;&#39;#263A&#39; UESCAPE &#39;#&#39;</code></li>
-</ul>
-
-      
-
-
-       
-
-      <!-- 增加版权声明 -->
-      <!--  
-      
-      
-        <div class="declare" hidden="hidden"></div>
-      
--->
-      <!-- 增加版权声明结束 -->
-
-
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">flink</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">sql</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">大数据</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/09/12/SQL-%E4%B8%80-%E6%9F%A5%E8%AF%A2%E8%AF%AD%E5%8F%A5%EF%BC%88%E4%B8%80%EF%BC%89%E5%9F%BA%E6%9C%AC%E6%9F%A5%E8%AF%A2/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Flink基础（一）：有状态的流式处理简介" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/09/12/Flink%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E6%9C%89%E7%8A%B6%E6%80%81%E7%9A%84%E6%B5%81%E5%BC%8F%E5%A4%84%E7%90%86%E7%AE%80%E4%BB%8B/">Flink基础（一）：有状态的流式处理简介</a>
-    </h1>
   
 
-
-        <!-- 单篇文章点击量 -->
-        <!--显示阅读次数-->
-        
-        <!--显示阅读次数完毕-->
-
-        
-        <a href="/2021/09/12/Flink%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E6%9C%89%E7%8A%B6%E6%80%81%E7%9A%84%E6%B5%81%E5%BC%8F%E5%A4%84%E7%90%86%E7%AE%80%E4%BB%8B/" class="archive-article-date">
-  	<time datetime="2021-09-12T08:29:35.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-09-12</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="0-简介"><a href="#0-简介" class="headerlink" title="0 简介"></a>0 简介</h2><p>　　Apache Flink是一个分布式流处理器，具有直观和富有表现力的API，可实现有状态的流处理应用程序。它以容错的方式有效地大规模运行这些应用程序。 Flink于2014年4月加入Apache软件基金会作为孵化项目，并于2015年1月成为顶级项目。从一开始，Flink就拥有一个非常活跃且不断增长的用户和贡献者社区。到目前为止，已有超过五百人为Flink做出贡献，并且它已经发展成为最复杂的开源流处理引擎之一，并得到了广泛采用的证明。 Flink为不同行业和全球的许多公司和企业提供大规模的商业关键应用。</p>
-<p>　　流处理技术在大大小小的公司中越来越受欢迎，因为它为许多已建立的用例（如数据分析，ETL和事务应用程序）提供了卓越的解决方案，同时也促进了新颖的应用程序，软件架构和商机。接下来我们将讨论，为什么有状态流处理变得如此受欢迎并评估其潜力。我们首先回顾传统的数据应用程序架构并指出它们的局限性。接下来，我们介绍基于状态流处理的应用程序设计 与传统方法相比，它具有许多有趣的特征最后，我们简要讨论开源流处理器的发展，并在本地Flink实例上运行流应用程序。</p>
-<h2 id="1-传统数据处理架构"><a href="#1-传统数据处理架构" class="headerlink" title="1 传统数据处理架构"></a>1 传统数据处理架构</h2><p>　　数十年来，数据和数据处理在企业中无处不在。多年来，数据的收集和使用一直在增长，公司已经设计并构建了基础架构来管理数据。大多数企业实施的传统架构区分了两种类型的数据处理：事务处理（OLTP）和分析处理（OLAP）。</p>
-<h3 id="1-1-事务处理"><a href="#1-1-事务处理" class="headerlink" title="1.1 事务处理"></a>1.1 事务处理</h3><p>　　公司将各种应用程序用于日常业务活动，例如企业资源规划（ERP）系统，客户关系管理（CRM）软件和基于Web的应用程序。这些系统通常设计有单独的层，用于数据处理（应用程序本身）和数据存储（事务数据库系统），如图1-1所示。</p>
-<p><img src="https://img2020.cnblogs.com/blog/1275415/202010/1275415-20201003122107889-54905913.png" alt="img"></p>
-<p>　　应用程序通常连接到外部服务或直接面向用户，并持续处理传入的事件，如网站上的订单，电子邮件或点击。处理事件时，应用程序将会读取远程数据库的状态，或者通过运行事务来更新它。通常，一个数据库系统可以服务于多个应用程序，它们有时会访问相同的数据库或表。</p>
-<p>　　当应用程序需要扩展时，这样的设计可能会导致问题。由于多个应用程序可能会同时用到相同的数据表示，或者共享相同的基础设施，因此想要更改表的结构或扩展数据库，就需要仔细的规划和大量的工作。克服紧耦合应用程序的最新方法是微服务设计模式。微服务被设计为小型、完备且独立的应用程序。他们遵循UNIX的理念，即“只做一件事并且把它做好”。通过将几个微服务相互连接来构建更复杂的应用程序，这些微服务仅通过标准化接口（例如RESTful HTTP连接）进行通信。由于微服务严格地彼此分离并且仅通过明确定义的接口进行通信，因此每个微服务都可以用不同技术栈来实现，包括编程语言、类库和数据存储。微服务和所有必需的软件和服务通常捆绑在一起并部署在独立的容器中。图1-2描绘了一种微服务架构。</p>
-<p><img src="https://img2020.cnblogs.com/blog/1275415/202010/1275415-20201003122136184-946828987.png" alt="img"></p>
-<h3 id="1-2-分析处理"><a href="#1-2-分析处理" class="headerlink" title="1.2 分析处理"></a>1.2 分析处理</h3><p>　　大量数据存储在公司的各种事务数据库系统中，它们可以为公司业务运营提供宝贵的参考意见。例如，分析订单处理系统的数据，可以获得销量随时间的增长曲线；可以识别延迟发货的原因；还可以预测未来的销量以便提前调整库存。但是，事务数据通常分布在多个数据库中，它们往往汇总起来联合分析时更有价值。而且，数据通常需要转换为通用格式。</p>
-<p>　　所以我们一般不会直接在事务数据库上运行分析查询，而是复制数据到数据仓库。数据仓库是对工作负载进行分析和查询的专用数据存储。为了填充数据仓库，需要将事务数据库系统管理的数据复制过来。将数据复制到数据仓库的过程称为extract-transform-load（ETL）。 ETL过程从事务数据库中提取数据，将其转换为某种通用的结构表示，可能包括验证，值的规范化，编码，重复数据删除（去重）和模式转换，最后将其加载到分析数据库中。 ETL过程可能非常复杂，并且通常需要技术复杂的解决方案来满足性能要求。 ETL过程需要定期运行以保持数据仓库中的数据同步。</p>
-<p>　　将数据导入数据仓库后，可以查询和分析数据。通常，在数据仓库上执行两类查询。第一种类型是定期报告查询，用于计算与业务相关的统计信息，比如收入、用户增长或者输出的产量。这些指标汇总到报告中，帮助管理层评估业务的整体健康状况。第二种类型是即席查询，旨在提供特定问题的答案并支持关键业务决策，例如收集统计在投放商业广告上的花费，和获取的相应收入，以评估营销活动的有效性。两种查询由批处理方式由数据仓库执行，如图1-3所示。</p>
-<p><img src="https://img2020.cnblogs.com/blog/1275415/202010/1275415-20201003122505924-236096753.png" alt="img"></p>
-<p> 　　如今，Apache Hadoop生态系统的组件，已经是许多企业IT基础架构中不可或缺的组成部分。现在的做法不是直接将所有数据都插入关系数据库系统，而是将大量数据（如日志文件，社交媒体或Web点击日志）写入Hadoop的分布式文件系统（HDFS）、S3或其他批量数据存储库，如Apache HBase，以较低的成本提供大容量存储容量。驻留在此类存储系统中的数据可以通过SQL-on-Hadoop引擎查询和处理，例如Apache Hive，Apache Drill或Apache Impala。但是，基础结构与传统数据仓库架构基本相同。</p>
-<h2 id="2-有状态的流式处理"><a href="#2-有状态的流式处理" class="headerlink" title="2 有状态的流式处理"></a>2 有状态的流式处理</h2><p>　　日常生活中，所有数据都是作为连续的事件流创建的。比如网站或者移动应用中的用户交互动作，订单的提交，服务器日志或传感器测量数据：所有这些都是事件流。实际上，很少有应用场景，能一次性地生成所需要的完整（有限）数据集。实际应用中更多的是无限事件流。有状态的流处理就是用于处理这种无限事件流的应用程序设计模式，在公司的IT基础设施中有广泛的应用场景。在我们讨论其用例之前，我们将简要介绍有状态流处理的工作原理。</p>
-<p>　　如果我们想要无限处理事件流，并且不愿意繁琐地每收到一个事件就记录一次，那这样的应用程序就需要是有状态的，也就是说能够存储和访问中间数据。当应用程序收到一个新事件时，它可以从状态中读取数据，或者向该状态写入数据，总之可以执行任何计算。原则上讲，我们可以在各种不同的地方存储和访问状态，包括程序变量（内存）、本地文件，还有嵌入式或外部数据库。</p>
-<p>　　Apache Flink将应用程序状态，存储在内存或者嵌入式数据库中。由于Flink是一个分布式系统，因此需要保护本地状态以防止在应用程序或计算机故障时数据丢失。 Flink通过定期将应用程序状态的一致性检查点（check point）写入远程且持久的存储，来保证这一点。状态、状态一致性和Flink的检查点将在后面的章节中更详细地讨论，但是，现在，图1-4显示了有状态的流式Flink应用程序。</p>
-<p><img src="https://img2020.cnblogs.com/blog/1275415/202010/1275415-20201003122602441-1120807000.png" alt="img"></p>
-<p>　　有状态的流处理应用程序，通常从事件日志中提取输入事件。事件日志就用来存储和分发事件流。事件被写入持久的<strong>仅添加</strong>（append-only）日志，这意味着无法更改写入事件的顺序。写入事件日志的流，可以被相同或不同的消费者多次读取。由于日志的仅附加（append-only）属性，事件始终以完全相同的顺序发布给所有消费者。现在已有几种事件日志系统，其中Apache Kafka是最受欢迎的，可以作为开源软件使用，或者是云计算提供商提供的集成服务。</p>
-<p>　　在Flink上运行的有状态的流处理应用程序，是很有意思的一件事。在这个架构中，事件日志会按顺序保留输入事件，并且可以按确定的顺序重播它们。如果发生故障，Flink将从先前的检查点（check point）恢复其状态，并重置事件日志上的读取位置，这样就可以恢复整个应用。应用程序将重放（并快进）事件日志中的输入事件，直到它到达流的尾部。此技术一般用于从故障中恢复，但也可用于更新应用程序、修复bug或者修复以前发出的结果，另外还可以用于将应用程序迁移到其他群集，或使用不同的应用程序版本执行A / B测试。</p>
-<p>　　如前所述，有状态的流处理是一种通用且灵活的设计架构，可用于许多不同的场景。在下文中，我们提出了三类通常使用有状态流处理实现的应用程序：<strong>（1）事件驱动应用程序，（2）数据管道应用程序，以及（3）数据分析应用程序。</strong></p>
-<p>我们将应用程序分类描述，是为了强调有状态流处理适用于多种业务场景；而实际的应用中，往往会具有以上多种情况的特征。</p>
-<h3 id="2-1-事件驱动应用程序"><a href="#2-1-事件驱动应用程序" class="headerlink" title="2.1 事件驱动应用程序"></a>2.1 事件驱动应用程序</h3><p>　　事件驱动的应用程序是有状态的流应用程序，它们使用特定的业务逻辑来提取事件流并处理事件。根据业务逻辑，事件驱动的应用程序可以触发诸如发送警报、或电子邮件之类的操作，或者将事件写入向外发送的事件流以供另一个应用程序使用。</p>
-<p>事件驱动应用程序的典型场景包括：</p>
-<ul>
-<li>实时推荐（例如，在客户浏览零售商网站时推荐产品）</li>
-<li>行为模式检测或复杂事件处理（例如，用于信用卡交易中的欺诈检测）</li>
-<li>异常检测（例如，检测侵入计算机网络的尝试</li>
-</ul>
-<p>　　事件驱动应用程序是微服务的演变。它们通过事件日志而不是REST调用进行通信，并将应用程序数据保存为本地状态，而不是将其写入外部数据存储区（例如关系数据库或键值数据库）。图1-5显示了由事件驱动的流应用程序组成的服务架构。</p>
-<p><img src="https://img2020.cnblogs.com/blog/1275415/202010/1275415-20201003122713475-912883586.png" alt="img"></p>
-<p>　　图1-5中的应用程序通过事件日志连接。一个应用程序将其输出发送到事件日志通道（kafka），另一个应用程序使用其他应用程序发出的事件。事件日志通道将发送者和接收者分离，并提供异步、非阻塞的事件传输。每个应用程序都可以是有状态的，并且可以本地管理自己的状态而无需访问外部数据存储。应用程序也可以单独处理和扩展。</p>
-<p>　　与事务性应用程序或微服务相比，事件驱动的应用程序具有多种优势。与读写远程数据库相比，本地状态访问提供了非常好的性能。扩展性和容错性都由流处理器来保证，并且以事件日志作为输入源，应用程序的整个输入数据可以可靠地存储，并且可以确定性地重放。此外，Flink可以将应用程序的状态重置为先前的保存点（save point），从而可以在不丢失状态的情况下更新或重新扩展应用程序。</p>
-<p>　　事件驱动的应用程序对运行它们的流处理器有很高的要求，并不是所有流处理器都适合运行事件驱动的应用程序。 API的表现力，以及对状态处理和事件时间支持的程度，决定了可以实现和执行的业务逻辑。这方面取决于流处理器的API，主要看它能提供什么样的状态类型，以及它对事件时间处理的支持程度。此外，精确一次（exactly-once）的状态一致性和扩展应用程序的能力是事件驱动应用程序的基本要求。 Apache Flink符合所有的这些要求，是运行此类应用程序的一个非常好的选择。</p>
-<h3 id="2-2-数据管道"><a href="#2-2-数据管道" class="headerlink" title="2.2 数据管道"></a>2.2 数据管道</h3><p>　　当今的IT架构包括许多不同的数据存储，例如关系型数据库和专用数据库系统、事件日志、分布式文件系统，内存中的缓存和搜索索引。所有这些系统都以不同的格式和数据结构存储数据，为其特定的访问模式提供最佳性能。公司通常将相同的数据存储在多个不同的系统中，以提高数据访问的性能。例如，网上商店中提供的产品的信息，可以存储在交易数据库中，同时也存储在缓存（如redis）和搜索索引（如ES）中。由于数据的这种复制，数据存储必须保持同步。</p>
-<p>　　在不同存储系统中同步数据的传统方法是定期ETL作业。但是，它们不能满足当今许多场景的延迟要求。另一种方法是使用事件日志（event log）来发布更新。更新将写入事件日志并由事件日志分发。日志的消费者获取到更新之后，将更新合并到受影响的数据存储中。根据使用情况，传输的数据可能需要标准化、使用外部数据进行扩展，或者在目标数据存储提取之前进行聚合。</p>
-<p>　　以较低的延迟，来提取、转换和插入数据是有状态流处理应用程序的另一个常见应用场景。这种类型的应用程序称为数据管道（data pipeline）。数据管道必须能够在短时间内处理大量数据。操作数据管道的流处理器还应具有许多源（source）和接收器（sink）的连接器，以便从各种存储系统读取数据并将数据写入各种存储系统。当然，同样地，Flink完成了所有这些功能。</p>
-<h3 id="2-3-流分析"><a href="#2-3-流分析" class="headerlink" title="2.3 流分析"></a>2.3 流分析</h3><p>　　ETL作业定期将数据导入数据存储区，数据的处理是由即席查询（用户自定义查询）或设定好的通常查询来做的。无论架构是基于数据仓库还是基于Hadoop生态系统的组件，这都是批处理。多年来最好的处理方式就是，定期将数据加载到数据分析系统中，但它给分析管道带了的延迟相当大，而且无法避免。</p>
-<p>　　根据设定好的时间间隔，可能需要数小时或数天才能将数据点包含在报告中。我们前面已经提到，数据管道可以实现低延迟的ETL，所以在某种程度上，可以通过使用数据管道将数据导入存储区来减少延迟。但是，即使持续不停地进行ETL操作，在用查询来处理事件之前总会有延迟。虽然这种延迟在过去可能是可以接受的，但是今天的应用程序，往往要求必须能够实时收集数据，并立即对其进行操作（例如，在手机游戏中去适应不断变化的条件，或者在电商网站中提供个性化的用户体验）。</p>
-<p>　　流式分析应用程序不是等待定期触发，而是连续地提取事件流，并且通过纳入最新事件来更新其计算结果，这个过程是低延迟的。这有些类似于数据库中用于更新视图（views）的技术。通常，流应用程序将其结果存储在支持更新的外部数据存储中，例如数据库或键值（key-value）存储。流分析应用程序的实时更新结果可用于驱动监控仪表板（dashboard）应用程序，如图1-6所示。</p>
-<p><img src="https://img2020.cnblogs.com/blog/1275415/202010/1275415-20201003122840707-825713743.png" alt="img"></p>
-<p>　　流分析应用程序最大的优势就是，将每个事件纳入到分析结果所需的时间短得多。除此之外，流分析应用程序还有另一个不太明显的优势。传统的分析管道由几个独立的组件组成，例如ETL过程、存储系统、对于基于Hadoop的环境，还包括用于触发任务（jobs）的数据处理和调度程序。相比之下，如果我们运行一个有状态流应用程序，那么流处理器就会负责所有这些处理步骤，包括事件提取、带有状态维护的连续计算以及更新结果。此外，流处理器可以从故障中恢复，并且具有精确一次（exactly-once）的状态一致性保证，还可以调整应用程序的计算资源。像Flink这样的流处理器还支持事件时间（event-time）处理，这可以保证产生正确和确定的结果，并且能够在很短的时间内处理大量数据。</p>
-<p>流分析应用程序通常用于：</p>
-<ul>
-<li>监控手机网络的质量分析</li>
-<li>移动应用中的用户行为</li>
-<li>实时数据的即席分析</li>
-</ul>
-<p>虽然我们不在此处介绍，但Flink还提供对流上的分析SQL查询的支持。</p>
-<h2 id="3-开源流处理的演进"><a href="#3-开源流处理的演进" class="headerlink" title="3 开源流处理的演进"></a>3 开源流处理的演进</h2><p>　　数据流处理并不是一项新技术。一些最初的研究原型和商业产品可以追溯到20世纪90年代（1990s）。然而，在很大程度上，过去采用的流处理技术是由成熟的开源流处理器驱动的。如今，分布式开源流处理器在不同行业的许多企业中，处理着核心业务应用，比如电商、社交媒体、电信、游戏和银行等。开源软件是这一趋势的主要驱动力，主要原因有两个：</p>
-<ul>
-<li>开源流处理软件是大家每一个人都可以评估和使用的产品。</li>
-<li>由于许多开源社区的努力，可扩展流处理技术正在迅速成熟和发展</li>
-</ul>
-<p>　　仅仅一个Apache软件基金会就支持了十几个与流处理相关的项目。新的分布式流处理项目不断进入开源阶段，并不断增加新的特性和功能。开源社区不断改进其项目的功能，并正在推动流处理的技术边界。我们将简要介绍一下过去，看看开源流处理的起源和今天的状态。</p>
-<h3 id="3-1-流处理的历史"><a href="#3-1-流处理的历史" class="headerlink" title="3.1 流处理的历史"></a>3.1 流处理的历史</h3><p>　　第一代分布式开源流处理器（2011）专注于具有毫秒延迟的事件处理，并提供了在发生故障时防止事件丢失的保证。这些系统具有相当低级的API，并且对于流应用程序的准确性和结果的一致性，不提供内置支持，因为结果会取决于到达事件的时间和顺序。另外，即使事件没有丢失，也可能不止一次地处理它们。与批处理器相比，第一代开源流处理器牺牲了结果准确性，用来获得更低的延迟。为了让当时的数据处理系统，可以同时提供快速和准确的结果，人们设计了所谓的lambda架构，如图1-7所示。</p>
-<p><img src="https://img2020.cnblogs.com/blog/1275415/202010/1275415-20201003122940086-1744175521.png" alt="img"></p>
-<p>　　lambda架构增强了传统的批处理架构，其“快速层”（speed layer）由低延迟的流处理器来支持。数据到达之后由流处理器提取出来，并写入批处理存储。流处理器近乎实时地计算近似结果并将它们写入“快速表”（speed table）。批处理器定期处理批量存储中的数据，将准确的结果写入批处理表，并从速度表中删除相应的不准确结果。应用程序会合并快速表中的近似结果和批处理表中的准确结果，然后消费最终的结果。</p>
-<p>　　lambda架构现在已经不再是最先进的，但仍在许多地方使用。该体系结构的最初目标是改善原始批处理分析体系结构的高延迟。但是，它有一些明显的缺点。首先，它需要对一个应用程序，做出两个语义上等效的逻辑实现，用于两个独立的、具有不同API的处理系统。其次，流处理器计算的结果只是近似的。第三，lambda架构很难建立和维护。</p>
-<p>　　通过在第一代基础上进行改进，下一代分布式开源流处理器（2013）提供了更好的故障保证，并确保在发生故障时，每个输入记录仅对结果产生一次影响（exactly -once）。此外，编程API从相当低级的操作符接口演变为高级API。但是，一些改进（例如更高的吞吐量和更好的故障保证）是以将处理延迟从毫秒增加到几秒为代价的。此外，结果仍然取决于到达事件的时间和顺序。</p>
-<p>　　第三代分布式开源流处理器（2015）解决了结果对到达事件的时间和顺序的依赖性。结合精确一次（exactly-once）的故障语义，这一代系统是第一个具有计算一致性和准确结果的开源流处理器。通过基于实际数据来计算结果（“重演”数据），这些系统还能够以与“实时”数据相同的方式处理历史数据。另一个改进是解决了延迟/吞吐量无法同时保证的问题。先前的流处理器仅能提供高吞吐量或者低延迟（其中之一），而第三代系统能够同时提供这两个特性。这一代的流处理器使得lambda架构过时了。当然，这一代流处理以flink为代表。</p>
-<p>　　除了目前讨论的特性，例如容错、性能和结果准确性之外，流处理器还不断添加新的操作功能，例如高可用性设置，与资源管理器（如YARN或Kubernetes）的紧密集成，以及能够动态扩展流应用程序。其他功能包括：支持升级应用程序代码，或将作业迁移到其他群集或新版本的流处理器，而不会丢失当前状态。</p>
-<h2 id="4-Flink简介"><a href="#4-Flink简介" class="headerlink" title="4 Flink简介"></a>4 Flink简介</h2><p>Apache Flink是第三代分布式流处理器，它拥有极富竞争力的功能。它提供准确的大规模流处理，具有高吞吐量和低延迟。特别的是，以下功能使Flink脱颖而出：</p>
-<ul>
-<li>事件时间（event-time）和处理时间（processing-tme）语义。即使对于无序事件流，事件时间（event-time）语义仍然能提供一致且准确的结果。而处理时间（processing-time）语义可用于具有极低延迟要求的应用程序。</li>
-<li>精确一次（exactly-once）的状态一致性保证。</li>
-<li>每秒处理数百万个事件，毫秒级延迟。 Flink应用程序可以扩展为在数千个核（cores）上运行。</li>
-<li>分层API，具有不同的权衡表现力和易用性。本书介绍了DataStream API和过程函数（process function），为常见的流处理操作提供原语，如窗口和异步操作，以及精确控制状态和时间的接口。本书不讨论Flink的关系API，SQL和LINQ风格的Table API。</li>
-<li>连接到最常用的存储系统，如Apache Kafka，Apache Cassandra，Elasticsearch，JDBC，Kinesis和（分布式）文件系统，如HDFS和S3。</li>
-<li>由于其高可用的设置（无单点故障），以及与Kubernetes，YARN和Apache Mesos的紧密集成，再加上从故障中快速恢复和动态扩展任务的能力，Flink能够以极少的停机时间7*24全天候运行流应用程序。</li>
-<li>能够更新应用程序代码并将作业（jobs）迁移到不同的Flink集群，而不会丢失应用程序的状态。</li>
-<li>详细且可自定义的系统和应用程序指标集合，以提前识别问题并对其做出反应。</li>
-<li>最后但同样重要的是，Flink也是一个成熟的批处理器。</li>
-</ul>
-<p>　　除了这些功能之外，Flink还是一个非常易于开发的框架，因为它易于使用的API。嵌入式执行模式，可以在单个JVM进程中启动应用程序和整个Flink系统，这种模式一般用于在IDE中运行和调试Flink作业。在开发和测试Flink应用程序时，此功能非常有用。</p>
-
-      
-
-
-       
-
-      <!-- 增加版权声明 -->
-      <!--  
-      
-      
-        <div class="declare" hidden="hidden"></div>
-      
--->
-      <!-- 增加版权声明结束 -->
-
-
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">flink</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">流式计算</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/09/12/Flink%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E6%9C%89%E7%8A%B6%E6%80%81%E7%9A%84%E6%B5%81%E5%BC%8F%E5%A4%84%E7%90%86%E7%AE%80%E4%BB%8B/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-hello-world" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/09/12/hello-world/">Hello World</a>
-    </h1>
   
 
-
-        <!-- 单篇文章点击量 -->
-        <!--显示阅读次数-->
-        
-        <!--显示阅读次数完毕-->
-
-        
-        <a href="/2021/09/12/hello-world/" class="archive-article-date">
-  	<time datetime="2021-09-12T07:57:50.594Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-09-12</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-
-      
-
-
-       
-
-      <!-- 增加版权声明 -->
-      <!--  
-      
-      
-        <div class="declare" hidden="hidden"></div>
-      
--->
-      <!-- 增加版权声明结束 -->
-
-
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/09/12/hello-world/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
 
 
@@ -1273,8 +876,8 @@
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,

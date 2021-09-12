@@ -6,14 +6,21 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>Archives | Hexo</title>
+  <title>hive安装 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://example.com/archives/index.html">
+  <meta name="description" content="http:&#x2F;&#x2F;hive.apache.org&#x2F; https:&#x2F;&#x2F;cwiki.apache.org&#x2F;confluence&#x2F;display&#x2F;HIVE https:&#x2F;&#x2F;www.docs4dev.com&#x2F;docs&#x2F;zh&#x2F;apache-hive&#x2F;3.1.1&#x2F;reference 123456789101112131415161718192021222324252627282930313233343536373">
+<meta property="og:type" content="article">
+<meta property="og:title" content="hive安装">
+<meta property="og:url" content="http://example.com/2021/09/12/hive%E5%AE%89%E8%A3%85/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="http:&#x2F;&#x2F;hive.apache.org&#x2F; https:&#x2F;&#x2F;cwiki.apache.org&#x2F;confluence&#x2F;display&#x2F;HIVE https:&#x2F;&#x2F;www.docs4dev.com&#x2F;docs&#x2F;zh&#x2F;apache-hive&#x2F;3.1.1&#x2F;reference 123456789101112131415161718192021222324252627282930313233343536373">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-09-12T08:34:40.000Z">
+<meta property="article:modified_time" content="2021-09-12T08:47:51.621Z">
 <meta property="article:author" content="John Doe">
+<meta property="article:tag" content="sql">
+<meta property="article:tag" content="大数据">
+<meta property="article:tag" content="hive">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
@@ -155,36 +162,123 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-hive安装" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2021" class="archive-year">2021</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2021/09/12/hive%E5%AE%89%E8%A3%85/" class="archive-article-date">
-  	<time datetime="2021-09-12T08:34:40.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-09-12</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2021/09/12/hive%E5%AE%89%E8%A3%85/">hive安装</a>
+    <h1 class="article-title" itemprop="name">
+      hive安装
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+
+        <!-- 单篇文章点击量 -->
+        <!--显示阅读次数-->
+        
+          <br/>
+          <a class="cloud-tie-join-count" href="javascript:void(0);" style="color:gray;font-size:14px;">
+          <span class="icon-sort"></span>
+          <span id="busuanzi_container_page_pv" style="color:#ef7522;font-size:14px;">
+            👁 <span id="busuanzi_value_page_pv"></span> &nbsp;&nbsp;
+          </span>
+          </a>
+        
+        <!--显示阅读次数完毕-->
+
+        
+        <a href="/2021/09/12/hive%E5%AE%89%E8%A3%85/" class="archive-article-date">
+  	<time datetime="2021-09-12T08:34:40.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-09-12</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><a target="_blank" rel="noopener" href="http://hive.apache.org/">http://hive.apache.org/</a></p>
+<p><a target="_blank" rel="noopener" href="https://cwiki.apache.org/confluence/display/HIVE">https://cwiki.apache.org/confluence/display/HIVE</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.docs4dev.com/docs/zh/apache-hive/3.1.1/reference">https://www.docs4dev.com/docs/zh/apache-hive/3.1.1/reference</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br></pre></td><td class="code"><pre><span class="line">1.解压</span><br><span class="line">	tar -zxvf /opt/software/apache-hive-3.1.2-bin.tar.gz -C /opt/module/</span><br><span class="line">	</span><br><span class="line">2.添加环境变量 </span><br><span class="line">	sudo vim /etc/profile.d/my_env.sh</span><br><span class="line">	添加如下内容</span><br><span class="line">	#HIVE_HOME</span><br><span class="line">	export HIVE_HOME=/opt/module/apache-hive-3.1.2-bin</span><br><span class="line">	export PATH=$PATH:$HIVE_HOME/bin</span><br><span class="line">	</span><br><span class="line">3.刷新</span><br><span class="line">	source /etc/profile.d/my_env.sh</span><br><span class="line">	</span><br><span class="line">4.解决日志Jar包冲突</span><br><span class="line">	mv $HIVE_HOME/lib/log4j-slf4j-impl-2.10.0.jar $HIVE_HOME/lib/log4j-slf4j-impl-2.10.0.bak</span><br><span class="line">	</span><br><span class="line">5.将MySQL的JDBC驱动拷贝到Hive的lib目录下</span><br><span class="line">	cp /opt/software/mysql-connector-java-5.1.48.jar $HIVE_HOME/lib</span><br><span class="line"></span><br><span class="line">6.在$HIVE_HOME/conf目录下新建hive-site.xml文件</span><br><span class="line">	vim $HIVE_HOME/conf/hive-site.xml</span><br><span class="line">	添加如下内容</span><br><span class="line">    &lt;?xml version=&quot;1.0&quot;?&gt;</span><br><span class="line">    &lt;?xml-stylesheet type=&quot;text/xsl&quot; href=&quot;configuration.xsl&quot;?&gt;</span><br><span class="line">    &lt;configuration&gt;</span><br><span class="line">        &lt;!-- 配置数据库 用于存储元数据信息 --&gt;</span><br><span class="line">        &lt;property&gt;</span><br><span class="line">            &lt;name&gt;javax.jdo.option.ConnectionURL&lt;/name&gt;</span><br><span class="line">            &lt;value&gt;jdbc:mysql://hadoop102:3306/metastore?useSSL=false&lt;/value&gt;</span><br><span class="line">        &lt;/property&gt;</span><br><span class="line">        &lt;property&gt;</span><br><span class="line">            &lt;name&gt;javax.jdo.option.ConnectionDriverName&lt;/name&gt;</span><br><span class="line">            &lt;value&gt;com.mysql.jdbc.Driver&lt;/value&gt;</span><br><span class="line">        &lt;/property&gt;</span><br><span class="line">        &lt;property&gt;</span><br><span class="line">            &lt;name&gt;javax.jdo.option.ConnectionUserName&lt;/name&gt;</span><br><span class="line">            &lt;value&gt;root&lt;/value&gt;</span><br><span class="line">        &lt;/property&gt;</span><br><span class="line">        &lt;property&gt;</span><br><span class="line">            &lt;name&gt;javax.jdo.option.ConnectionPassword&lt;/name&gt;</span><br><span class="line">            &lt;value&gt;root&lt;/value&gt;</span><br><span class="line">        &lt;/property&gt;</span><br><span class="line">        &lt;!-- 原始数据在 HDFS 上的存储位置 --&gt; </span><br><span class="line">        &lt;property&gt;</span><br><span class="line">            &lt;name&gt;hive.metastore.warehouse.dir&lt;/name&gt;</span><br><span class="line">            &lt;value&gt;/user/hive/warehouse&lt;/value&gt;</span><br><span class="line">        &lt;/property&gt;</span><br><span class="line">        &lt;!-- 设为false 不做验证--&gt;</span><br><span class="line">        &lt;property&gt;</span><br><span class="line">            &lt;name&gt;hive.metastore.schema.verification&lt;/name&gt;</span><br><span class="line">            &lt;value&gt;false&lt;/value&gt;</span><br><span class="line">        &lt;/property&gt;</span><br><span class="line">        &lt;!-- 启动元数据及元数据库服务只需启动时连接 没有配置就不需要启动每次操作都会连接 --&gt;    </span><br><span class="line">        &lt;property&gt;</span><br><span class="line">            &lt;name&gt;hive.metastore.uris&lt;/name&gt;</span><br><span class="line">            &lt;value&gt;thrift://hadoop102:9083&lt;/value&gt;</span><br><span class="line">        &lt;/property&gt;</span><br><span class="line"></span><br><span class="line">        &lt;property&gt;</span><br><span class="line">            &lt;name&gt;hive.server2.thrift.port&lt;/name&gt;</span><br><span class="line">            &lt;value&gt;10000&lt;/value&gt;</span><br><span class="line">        &lt;/property&gt;</span><br><span class="line">        &lt;property&gt;</span><br><span class="line">            &lt;name&gt;hive.server2.thrift.bind.host&lt;/name&gt;</span><br><span class="line">            &lt;value&gt;hadoop102&lt;/value&gt;</span><br><span class="line">        &lt;/property&gt;</span><br><span class="line">        &lt;property&gt;</span><br><span class="line">            &lt;name&gt;hive.metastore.event.db.notification.api.auth&lt;/name&gt;</span><br><span class="line">            &lt;value&gt;false&lt;/value&gt;</span><br><span class="line">        &lt;/property&gt;</span><br><span class="line">        &lt;property&gt;</span><br><span class="line">            &lt;name&gt;hive.cli.print.header&lt;/name&gt;</span><br><span class="line">            &lt;value&gt;true&lt;/value&gt;</span><br><span class="line">        &lt;/property&gt;</span><br><span class="line">        &lt;property&gt;</span><br><span class="line">            &lt;name&gt;hive.cli.print.current.db&lt;/name&gt;</span><br><span class="line">            &lt;value&gt;true&lt;/value&gt;</span><br><span class="line">        &lt;/property&gt;</span><br><span class="line">    &lt;/configuration&gt;</span><br><span class="line"></span><br><span class="line">7.配置 执行引擎</span><br><span class="line"></span><br><span class="line">8.初始化元数据库</span><br><span class="line">	$HIVE_HOME/bin schematool -initSchema -dbType mysql -verbose</span><br><span class="line">	</span><br><span class="line">9.启动metastore和hiveserver2 如果 hive-site.xml中 没有配置 hive.metastore.uris 参数就无需启动</span><br><span class="line">	Hive 2.x以上版本，要先启动这两个服务，否则会报错</span><br><span class="line">	Unable to instantiate org.apache.hadoop.hive.ql.metadata.SessionHiveMetaStoreClient</span><br><span class="line">	启动 metastore和hiveserver2 脚本</span><br><span class="line">    #!/bin/bash</span><br><span class="line">    HIVE_LOG_DIR=$HIVE_HOME/logs</span><br><span class="line"></span><br><span class="line">    mkdir -p $HIVE_LOG_DIR</span><br><span class="line"></span><br><span class="line">    #检查进程是否运行正常，参数1为进程名，参数2为进程端口</span><br><span class="line">    function check_process()</span><br><span class="line">    &#123;</span><br><span class="line">        pid=$(ps -ef 2&gt;/dev/null | grep -v grep | grep -i $1 | awk &#x27;&#123;print $2&#125;&#x27;)</span><br><span class="line">        ppid=$(netstat -nltp 2&gt;/dev/null | grep $2 | awk &#x27;&#123;print $7&#125;&#x27; | cut -d &#x27;/&#x27; -f 1)</span><br><span class="line">        echo $pid</span><br><span class="line">        [[ &quot;$pid&quot; =~ &quot;$ppid&quot; ]] &amp;&amp; [ &quot;$ppid&quot; ] &amp;&amp; return 0 || return 1</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function hive_start()</span><br><span class="line">    &#123;</span><br><span class="line">        metapid=$(check_process HiveMetastore 9083)</span><br><span class="line">        cmd=&quot;nohup hive --service metastore &gt;$HIVE_LOG_DIR/metastore.log 2&gt;&amp;1 &amp;&quot;</span><br><span class="line">        cmd=$cmd&quot; sleep4; hdfs dfsadmin -safemode wait &gt;/dev/null 2&gt;&amp;1&quot;</span><br><span class="line">        [ -z &quot;$metapid&quot; ] &amp;&amp; eval $cmd || echo &quot;Metastroe服务已启动&quot;</span><br><span class="line">        server2pid=$(check_process HiveServer2 10000)</span><br><span class="line">        cmd=&quot;nohup hive --service hiveserver2 &gt;$HIVE_LOG_DIR/hiveServer2.log 2&gt;&amp;1 &amp;&quot;</span><br><span class="line">        [ -z &quot;$server2pid&quot; ] &amp;&amp; eval $cmd || echo &quot;HiveServer2服务已启动&quot;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function hive_stop()</span><br><span class="line">    &#123;</span><br><span class="line">        metapid=$(check_process HiveMetastore 9083)</span><br><span class="line">        [ &quot;$metapid&quot; ] &amp;&amp; kill $metapid || echo &quot;Metastore服务未启动&quot;</span><br><span class="line">        server2pid=$(check_process HiveServer2 10000)</span><br><span class="line">        [ &quot;$server2pid&quot; ] &amp;&amp; kill $server2pid || echo &quot;HiveServer2服务未启动&quot;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    case $1 in</span><br><span class="line">    &quot;start&quot;)</span><br><span class="line">        hive_start</span><br><span class="line">        ;;</span><br><span class="line">    &quot;stop&quot;)</span><br><span class="line">        hive_stop</span><br><span class="line">        ;;</span><br><span class="line">    &quot;restart&quot;)</span><br><span class="line">        hive_stop</span><br><span class="line">        sleep 2</span><br><span class="line">        hive_start</span><br><span class="line">        ;;</span><br><span class="line">    &quot;status&quot;)</span><br><span class="line">        check_process HiveMetastore 9083 &gt;/dev/null &amp;&amp; echo &quot;Metastore服务运行正常&quot; || echo &quot;Metastore服务运行异常&quot;</span><br><span class="line">        check_process HiveServer2 10000 &gt;/dev/null &amp;&amp; echo &quot;HiveServer2服务运行正常&quot; || echo &quot;HiveServer2服务运行异常&quot;</span><br><span class="line">        ;;</span><br><span class="line">    *)</span><br><span class="line">        echo Invalid Args!</span><br><span class="line">        echo &#x27;Usage: &#x27;$(basename $0)&#x27; start|stop|restart|status&#x27;</span><br><span class="line">        ;;</span><br><span class="line">    esac</span><br><span class="line">    #!/bin/bash</span><br><span class="line">    HIVE_LOG_DIR=$HIVE_HOME/logs</span><br><span class="line"></span><br><span class="line">    mkdir -p $HIVE_LOG_DIR</span><br><span class="line"></span><br><span class="line">    #检查进程是否运行正常，参数1为进程名，参数2为进程端口</span><br><span class="line">    function check_process()</span><br><span class="line">    &#123;</span><br><span class="line">        pid=$(ps -ef 2&gt;/dev/null | grep -v grep | grep -i $1 | awk &#x27;&#123;print $2&#125;&#x27;)</span><br><span class="line">        ppid=$(netstat -nltp 2&gt;/dev/null | grep $2 | awk &#x27;&#123;print $7&#125;&#x27; | cut -d &#x27;/&#x27; -f 1)</span><br><span class="line">        echo $pid</span><br><span class="line">        [[ &quot;$pid&quot; =~ &quot;$ppid&quot; ]] &amp;&amp; [ &quot;$ppid&quot; ] &amp;&amp; return 0 || return 1</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function hive_start()</span><br><span class="line">    &#123;</span><br><span class="line">        metapid=$(check_process HiveMetastore 9083)</span><br><span class="line">        cmd=&quot;nohup hive --service metastore &gt;$HIVE_LOG_DIR/metastore.log 2&gt;&amp;1 &amp;&quot;</span><br><span class="line">        cmd=$cmd&quot; sleep4; hdfs dfsadmin -safemode wait &gt;/dev/null 2&gt;&amp;1&quot;</span><br><span class="line">        [ -z &quot;$metapid&quot; ] &amp;&amp; eval $cmd || echo &quot;Metastroe服务已启动&quot;</span><br><span class="line">        server2pid=$(check_process HiveServer2 10000)</span><br><span class="line">        cmd=&quot;nohup hive --service hiveserver2 &gt;$HIVE_LOG_DIR/hiveServer2.log 2&gt;&amp;1 &amp;&quot;</span><br><span class="line">        [ -z &quot;$server2pid&quot; ] &amp;&amp; eval $cmd || echo &quot;HiveServer2服务已启动&quot;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function hive_stop()</span><br><span class="line">    &#123;</span><br><span class="line">        metapid=$(check_process HiveMetastore 9083)</span><br><span class="line">        [ &quot;$metapid&quot; ] &amp;&amp; kill $metapid || echo &quot;Metastore服务未启动&quot;</span><br><span class="line">        server2pid=$(check_process HiveServer2 10000)</span><br><span class="line">        [ &quot;$server2pid&quot; ] &amp;&amp; kill $server2pid || echo &quot;HiveServer2服务未启动&quot;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    case $1 in</span><br><span class="line">    &quot;start&quot;)</span><br><span class="line">        hive_start</span><br><span class="line">        ;;</span><br><span class="line">    &quot;stop&quot;)</span><br><span class="line">        hive_stop</span><br><span class="line">        ;;</span><br><span class="line">    &quot;restart&quot;)</span><br><span class="line">        hive_stop</span><br><span class="line">        sleep 2</span><br><span class="line">        hive_start</span><br><span class="line">        ;;</span><br><span class="line">    &quot;status&quot;)</span><br><span class="line">        check_process HiveMetastore 9083 &gt;/dev/null &amp;&amp; echo &quot;Metastore服务运行正常&quot; || echo &quot;Metastore服务运行异常&quot;</span><br><span class="line">        check_process HiveServer2 10000 &gt;/dev/null &amp;&amp; echo &quot;HiveServer2服务运行正常&quot; || echo &quot;HiveServer2服务运行异常&quot;</span><br><span class="line">        ;;</span><br><span class="line">    *)</span><br><span class="line">        echo Invalid Args!</span><br><span class="line">        echo &#x27;Usage: &#x27;$(basename $0)&#x27; start|stop|restart|status&#x27;</span><br><span class="line">        ;;</span><br><span class="line">    esac</span><br><span class="line"></span><br><span class="line">10.启动Hive后台服务</span><br><span class="line">	hiveservices.sh start</span><br><span class="line">	</span><br><span class="line">11.启动beeline客户端</span><br><span class="line">	 beeline -u jdbc:hive2://hadoop102:10000 -n zero</span><br><span class="line"></span><br><span class="line">12.配置日志位置</span><br><span class="line">	mv hive-log4j.properties.template hive-log4j.properties</span><br><span class="line">	在hive-log4j.properties文件中修改log存放位置</span><br><span class="line">	hive.log.dir=/opt/module/hive/logs</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line">Tez引擎</span><br><span class="line">1.解压</span><br><span class="line">	tar -zxvf /opt/software/tez-0.10.1-SNAPSHOT-minimal.tar.gz -C /opt/module/tez</span><br><span class="line">2.上传tez依赖到HDFS</span><br><span class="line">	hadoop fs -mkdir /tez</span><br><span class="line">	hadoop fs -put /opt/software/tez-0.10.1-SNAPSHOT.tar.gz /tez</span><br><span class="line">3.新建tez-site.xml</span><br><span class="line">	vim $HADOOP_HOME/etc/hadoop/tez-site.xml</span><br><span class="line">	添加如下内容</span><br><span class="line">    &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line">    &lt;?xml-stylesheet type=&quot;text/xsl&quot; href=&quot;configuration.xsl&quot;?&gt;</span><br><span class="line">    &lt;configuration&gt;</span><br><span class="line">    &lt;property&gt;</span><br><span class="line">        &lt;name&gt;tez.lib.uris&lt;/name&gt;</span><br><span class="line">        &lt;value&gt;$&#123;fs.defaultFS&#125;/tez/tez-0.10.1-SNAPSHOT.tar.gz&lt;/value&gt;</span><br><span class="line">    &lt;/property&gt;</span><br><span class="line">    &lt;property&gt;</span><br><span class="line">         &lt;name&gt;tez.use.cluster.hadoop-libs&lt;/name&gt;</span><br><span class="line">         &lt;value&gt;true&lt;/value&gt;</span><br><span class="line">    &lt;/property&gt;</span><br><span class="line">    &lt;property&gt;</span><br><span class="line">         &lt;name&gt;tez.am.resource.memory.mb&lt;/name&gt;</span><br><span class="line">         &lt;value&gt;1024&lt;/value&gt;</span><br><span class="line">    &lt;/property&gt;</span><br><span class="line">    &lt;property&gt;</span><br><span class="line">         &lt;name&gt;tez.am.resource.cpu.vcores&lt;/name&gt;</span><br><span class="line">         &lt;value&gt;1&lt;/value&gt;</span><br><span class="line">    &lt;/property&gt;</span><br><span class="line">    &lt;property&gt;</span><br><span class="line">         &lt;name&gt;tez.container.max.java.heap.fraction&lt;/name&gt;</span><br><span class="line">         &lt;value&gt;0.4&lt;/value&gt;</span><br><span class="line">    &lt;/property&gt;</span><br><span class="line">    &lt;property&gt;</span><br><span class="line">         &lt;name&gt;tez.task.resource.memory.mb&lt;/name&gt;</span><br><span class="line">         &lt;value&gt;1024&lt;/value&gt;</span><br><span class="line">    &lt;/property&gt;</span><br><span class="line">    &lt;property&gt;</span><br><span class="line">         &lt;name&gt;tez.task.resource.cpu.vcores&lt;/name&gt;</span><br><span class="line">         &lt;value&gt;1&lt;/value&gt;</span><br><span class="line">    &lt;/property&gt;</span><br><span class="line">    &lt;/configuration&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">4.编辑hadoop-env.sh</span><br><span class="line">	vim $HADOOP_HOME/etc/hadoop/shellprofile.d/tez.sh</span><br><span class="line">	#添加Tez的Jar包相关信息</span><br><span class="line">    hadoop_add_profile tez</span><br><span class="line">    function _tez_hadoop_classpath</span><br><span class="line">    &#123;</span><br><span class="line">        hadoop_add_classpath &quot;$HADOOP_HOME/etc/hadoop&quot; after</span><br><span class="line">        hadoop_add_classpath &quot;/opt/module/tez/*&quot; after</span><br><span class="line">        hadoop_add_classpath &quot;/opt/module/tez/lib/*&quot; after</span><br><span class="line">    &#125;</span><br><span class="line">5.修改Hive的计算引擎</span><br><span class="line">	vim $HIVE_HOME/conf/hive-site.xml</span><br><span class="line">	#添加如下内容</span><br><span class="line">    &lt;property&gt;</span><br><span class="line">        &lt;name&gt;hive.execution.engine&lt;/name&gt;</span><br><span class="line">    	&lt;value&gt;tez&lt;/value&gt;</span><br><span class="line">    &lt;/property&gt;</span><br><span class="line">    &lt;property&gt;</span><br><span class="line">        &lt;name&gt;hive.tez.container.size&lt;/name&gt;</span><br><span class="line">        &lt;value&gt;1024&lt;/value&gt;</span><br><span class="line">    &lt;/property&gt;</span><br><span class="line">6.解决日志Jar包冲突</span><br><span class="line">	rm /opt/module/tez/lib/slf4j-log4j12-1.7.10.jar</span><br><span class="line">	</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line">spark 引擎</span><br><span class="line">https://www.apache.org/dyn/closer.lua/spark/spark-2.4.5/spark-2.4.5.tgz</span><br><span class="line"></span><br><span class="line">1.解压</span><br><span class="line">	tar -zxf /opt/software/spark-2.4.5-bin-without-hive.tgz -C /opt/module</span><br><span class="line">	mv /opt/module/spark-2.4.5-bin-without-hive /opt/module/spark</span><br><span class="line">	</span><br><span class="line">2.配置SPARK_HOME环境变量</span><br><span class="line">	sudo vim /etc/profile.d/my_env.sh</span><br><span class="line">	添加如下内容</span><br><span class="line">	export SPARK_HOME=/opt/module/spark</span><br><span class="line">	export PATH=$PATH:$SPARK_HOME/bin</span><br><span class="line">	</span><br><span class="line">3.刷新</span><br><span class="line">	source /etc/profile.d/my_env.sh</span><br><span class="line">	</span><br><span class="line">4.配置spark运行环境	</span><br><span class="line">	mv /opt/module/spark/conf/spark-env.sh.template /opt/module/spark/conf/spark-env.sh	</span><br><span class="line">	vim /opt/module/spark/conf/spark-env.sh</span><br><span class="line">	添加如下内容</span><br><span class="line">	export SPARK_DIST_CLASSPATH=$(hadoop classpath)</span><br><span class="line">	</span><br><span class="line">5.连接sparkjar包到hive，如果hive中已存在则跳过	</span><br><span class="line">	ln -s /opt/module/spark/jars/scala-library-2.11.12.jar /opt/module/hive/lib/scala-library-2.11.12.jar</span><br><span class="line">	ln -s /opt/module/spark/jars/spark-core_2.11-2.4.5.jar /opt/module/hive/lib/spark-core_2.11-2.4.5.jar</span><br><span class="line">	ln -s /opt/module/spark/jars/spark-network-common_2.11-2.4.5.jar /opt/module/hive/lib/spark-network-common_2.11-2.4.5.jar</span><br><span class="line">	</span><br><span class="line">6.新建spark配置文件</span><br><span class="line">	vim /opt/module/hive/conf/spark-defaults.conf</span><br><span class="line">	添加如下内容</span><br><span class="line">    spark.master                                    yarn</span><br><span class="line">    spark.master                                    yarn</span><br><span class="line">    spark.eventLog.enabled                          true</span><br><span class="line">    spark.eventLog.dir                              hdfs://hadoop102:8020/spark-history</span><br><span class="line">    spark.driver.memory                             2g</span><br><span class="line">    spark.executor.memory                           2g</span><br><span class="line"></span><br><span class="line">    spark.yarn.historyServer.address                hadoop102:18080</span><br><span class="line">    spark.history.ui.port                           18080</span><br><span class="line"></span><br><span class="line">7.上传Spark依赖到HDFS</span><br><span class="line">	hadoop fs -put /opt/module/spark/jars/* /spark-jars</span><br><span class="line"></span><br><span class="line">8.修改Hive的计算引擎</span><br><span class="line">	vim $HIVE_HOME/conf/hive-site.xml</span><br><span class="line">	添加如下内容</span><br><span class="line">    &lt;!--Spark依赖位置--&gt;</span><br><span class="line">    &lt;property&gt;</span><br><span class="line">    &lt;name&gt;spark.yarn.jars&lt;/name&gt;</span><br><span class="line">    &lt;value&gt;hdfs://hadoop102:8020/spark-jars/*&lt;/value&gt;</span><br><span class="line">    &lt;/property&gt;</span><br><span class="line">    &lt;!--Hive执行引擎--&gt;</span><br><span class="line">    &lt;property&gt;</span><br><span class="line">    &lt;name&gt;hive.execution.engine&lt;/name&gt;</span><br><span class="line">    &lt;value&gt;spark&lt;/value&gt;</span><br><span class="line">    &lt;/property&gt;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+      
+
+
+      
+        
+          <div class="essayending">
+            <div>
+             <div style="text-align:center;color: #ccc;font-size:22px;">
+             <br/>
+             <br/>
+             -------------<i class="fa fa-paw"></i>感谢您的阅读-------------
+             <br/>
+             <br/>
+              <br/>
+              <br/>
+             </div>
+            </div>
+          </div>
+        
+ 
+     
+
+      <!-- 增加版权声明 -->
+      <!--  
+      
+      
+        <div class="declare" hidden="hidden"></div>
+      
+-->
+      <!-- 增加版权声明结束 -->
+
+
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -204,180 +298,106 @@
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2021/09/12/hive%E5%AE%89%E8%A3%85/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2021/09/12/Spring-IOC-%E5%AE%B9%E5%99%A8%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/" class="archive-article-date">
-  	<time datetime="2021-09-12T08:33:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-09-12</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2021/09/12/Spring-IOC-%E5%AE%B9%E5%99%A8%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Spring+IOC+容器源码分析</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2021/09/12/Spring-IOC-%E5%AE%B9%E5%99%A8%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/">Spring+IOC+容器源码分析</a>
-    </h1>
+  
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">spring</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">ioc</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">后端</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-flink基础（二十五）：flink">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2021/09/12/SQL-%E4%B8%80-%E6%9F%A5%E8%AF%A2%E8%AF%AD%E5%8F%A5%EF%BC%88%E4%B8%80%EF%BC%89%E5%9F%BA%E6%9C%AC%E6%9F%A5%E8%AF%A2/" class="archive-article-date">
-  	<time datetime="2021-09-12T08:30:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-09-12</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2021/09/12/SQL-%E4%B8%80-%E6%9F%A5%E8%AF%A2%E8%AF%AD%E5%8F%A5%EF%BC%88%E4%B8%80%EF%BC%89%E5%9F%BA%E6%9C%AC%E6%9F%A5%E8%AF%A2/">SQL(一)查询语句（一）基本查询</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">flink</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">sql</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">大数据</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2021/09/12/Flink%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E6%9C%89%E7%8A%B6%E6%80%81%E7%9A%84%E6%B5%81%E5%BC%8F%E5%A4%84%E7%90%86%E7%AE%80%E4%BB%8B/" class="archive-article-date">
-  	<time datetime="2021-09-12T08:29:35.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-09-12</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2021/09/12/Flink%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E6%9C%89%E7%8A%B6%E6%80%81%E7%9A%84%E6%B5%81%E5%BC%8F%E5%A4%84%E7%90%86%E7%AE%80%E4%BB%8B/">Flink基础（一）：有状态的流式处理简介</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">flink</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">流式计算</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2021/09/12/hello-world/" class="archive-article-date">
-  	<time datetime="2021-09-12T07:57:50.594Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-09-12</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2021/09/12/hello-world/">Hello World</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
 
 
           </div>
@@ -400,8 +420,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
