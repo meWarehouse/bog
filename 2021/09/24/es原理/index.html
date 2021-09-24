@@ -15,17 +15,15 @@
 <meta property="og:site_name" content="一个零">
 <meta property="og:description" content="https:&#x2F;&#x2F;blog.csdn.net&#x2F;yinni11&#x2F;article&#x2F;details&#x2F;92831436 https:&#x2F;&#x2F;mp.weixin.qq.com&#x2F;s&#x2F;Er7di6TkkAK75R_kKu2hxA  [TOC]">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="c:/Users/zero/Pictures/images/20190619143419498.png">
-<meta property="og:image" content="c:/Users/zero/Pictures/images/Snipaste_2021-09-23_22-48-19.jpg">
-<meta property="og:image" content="c:/Users/zero/Pictures/images/Snipaste_2021-09-23_22-56-08.jpg">
-<meta property="og:image" content="c:/Users/zero/Pictures/images/Snipaste_2021-09-24_10-31-16.jpg">
-<meta property="og:image" content="https://gulimall-uploadarea.oss-cn-hangzhou.aliyuncs.com/2020-07-24/6008bb9d-ed65-4233-8f0e-8d1d70ad9f65_23cd65077f12f7f5.jpg?versionId=CAEQIBiBgMDju9yEnBciIGRmOTY3ZDkyMzA0OTQ3ODZhMGFmYmNiMjk4OGNjZmY1">
-<meta property="og:image" content="https://gulimall-uploadarea.oss-cn-hangzhou.aliyuncs.com/2020-07-24/70ab6ac8-4404-4da2-8eec-c219d80d7f2c_8bf441260bffa42f.jpg?versionId=CAEQIBiBgIDMtNuEnBciIGRjNzI3Mzc5YTkzYzRiOWJhMTgyODEyOGNlMDEwOGRi">
+<meta property="og:image" content="https://210924bog.oss-cn-beijing.aliyuncs.com/bog/images/20190619143419498.png">
+<meta property="og:image" content="https://210924bog.oss-cn-beijing.aliyuncs.com/bog/images/Snipaste_2021-09-23_22-48-19.jpg">
+<meta property="og:image" content="https://210924bog.oss-cn-beijing.aliyuncs.com/bog/images/Snipaste_2021-09-23_22-56-08.jpg">
+<meta property="og:image" content="https://210924bog.oss-cn-beijing.aliyuncs.com/bog/images/Snipaste_2021-09-24_10-31-16.jpg">
 <meta property="article:published_time" content="2021-09-24T03:04:01.000Z">
-<meta property="article:modified_time" content="2021-09-24T03:04:28.959Z">
+<meta property="article:modified_time" content="2021-09-24T03:29:54.107Z">
 <meta property="article:author" content="一个零">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="c:/Users/zero/Pictures/images/20190619143419498.png">
+<meta name="twitter:image" content="https://210924bog.oss-cn-beijing.aliyuncs.com/bog/images/20190619143419498.png">
   
     <link rel="alternative" href="/atom.xml" title="一个零" type="application/atom+xml">
   
@@ -234,7 +232,7 @@
       
         <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/yinni11/article/details/92831436">https://blog.csdn.net/yinni11/article/details/92831436</a></p>
 <p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/Er7di6TkkAK75R_kKu2hxA">https://mp.weixin.qq.com/s/Er7di6TkkAK75R_kKu2hxA</a></p>
-<p><img src="C:\Users\zero\Pictures\images\20190619143419498.png" alt="20190619143419498"></p>
+<p><img src="https://210924bog.oss-cn-beijing.aliyuncs.com/bog/images/20190619143419498.png" alt="20190619143419498"></p>
 <p>[TOC]</p>
 <span id="more"></span>
 
@@ -244,7 +242,7 @@
 
 
 
-<h2 id="es-写数据过程"><a href="#es-写数据过程" class="headerlink" title="es 写数据过程"></a>es 写数据过程</h2><p><img src="C:\Users\zero\Pictures\images\Snipaste_2021-09-23_22-48-19.jpg" alt="20190619143419498"></p>
+<h2 id="es-写数据过程"><a href="#es-写数据过程" class="headerlink" title="es 写数据过程"></a>es 写数据过程</h2><p><img src="https://210924bog.oss-cn-beijing.aliyuncs.com/bog/images/Snipaste_2021-09-23_22-48-19.jpg" alt="20190619143419498"></p>
 <ul>
 <li>客户端选择一个 node 发送请求过去，这个 node 就是 <code>coordinating node</code> （协调节点）。</li>
 <li><code>coordinating node</code> 对 document 进行<strong>路由</strong>，将请求转发给对应的 node（有 primary shard）。</li>
@@ -267,7 +265,7 @@
 <blockquote>
 <p>写请求是写入 primary shard，然后同步给所有的 replica shard；读请求可以从 primary shard 或 replica shard 读取，采用的是随机轮询算法。</p>
 </blockquote>
-<h2 id="写数据底层原理"><a href="#写数据底层原理" class="headerlink" title="写数据底层原理"></a>写数据底层原理</h2><p><img src="C:\Users\zero\Pictures\images\Snipaste_2021-09-23_22-56-08.jpg" alt="20190619143419498"></p>
+<h2 id="写数据底层原理"><a href="#写数据底层原理" class="headerlink" title="写数据底层原理"></a>写数据底层原理</h2><p><img src="https://210924bog.oss-cn-beijing.aliyuncs.com/bog/images/Snipaste_2021-09-23_22-56-08.jpg" alt="20190619143419498"></p>
 <p><strong>es-write-detail</strong></p>
 <p>【1】数据会先写入buffer中，但是buffer中的数据是无法search的，所以在写入buffer的同时也会写入translog 日志文件</p>
 <p>【2】如果 buffer 快满了，或者到一定时间，就会将内存 buffer 数据 <code>refresh</code> 到一个新的 <code>segment file</code> 中，但是此时数据不是直接进入 <code>segment file</code>  磁盘文件，而是先进入 <code>os cache</code>[操作系统缓存] 。这个过程就是 <code>refresh</code> 。</p>
@@ -293,7 +291,7 @@
 <li>Lucene提供了一个简单却强大的应用程序接口（API），能够做全文索引和搜寻，在Java开发环境里Lucene是一个成熟的免费开放源代码工具</li>
 <li>Lucene并不是现成的搜索引擎产品，但可以用来制作搜索引擎产品。例如：solr和elasticsearch</li>
 </ul>
-<h2 id="倒排索引"><a href="#倒排索引" class="headerlink" title="倒排索引"></a>倒排索引</h2><p><img src="C:\Users\zero\Pictures\images\Snipaste_2021-09-24_10-31-16.jpg" alt="20190619143419498"></p>
+<h2 id="倒排索引"><a href="#倒排索引" class="headerlink" title="倒排索引"></a>倒排索引</h2><p><img src="https://210924bog.oss-cn-beijing.aliyuncs.com/bog/images/Snipaste_2021-09-24_10-31-16.jpg" alt="20190619143419498"></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Term（单词）：一段文本经过分析器分析以后就会输出一串单词，这一个一个的就叫做Term（直译为：单词）</span><br><span class="line"></span><br><span class="line">Term Dictionary（单词字典）：顾名思义，它里面维护的是Term，可以理解为Term的集合</span><br><span class="line"></span><br><span class="line">Term Index（单词索引）：为了更快的找到某个单词，我们为单词建立索引</span><br><span class="line"></span><br><span class="line">Posting List（倒排列表）：倒排列表记录了出现过某个单词的所有文档的文档列表及单词在该文档中出现的位置信息，每条记录称为一个倒排项(Posting)。根据倒排列表，即可获知哪些文档包含某个单词</span><br></pre></td></tr></table></figure>
 
 <ul>
@@ -302,8 +300,6 @@
 <li>然后倒排列表中就会存储 单词 在那个index index的那个位置 及出现的次数 …</li>
 <li>为了加快查找单词字典的顺序，lucene底层还会将单词字典构建成单词索引</li>
 </ul>
-<p><img src="https://gulimall-uploadarea.oss-cn-hangzhou.aliyuncs.com/2020-07-24/6008bb9d-ed65-4233-8f0e-8d1d70ad9f65_23cd65077f12f7f5.jpg?versionId=CAEQIBiBgMDju9yEnBciIGRmOTY3ZDkyMzA0OTQ3ODZhMGFmYmNiMjk4OGNjZmY1" alt="20190619143419498"></p>
-<p><img src="https://gulimall-uploadarea.oss-cn-hangzhou.aliyuncs.com/2020-07-24/70ab6ac8-4404-4da2-8eec-c219d80d7f2c_8bf441260bffa42f.jpg?versionId=CAEQIBiBgIDMtNuEnBciIGRjNzI3Mzc5YTkzYzRiOWJhMTgyODEyOGNlMDEwOGRi" alt="20190619143419498"></p>
 
       
 
